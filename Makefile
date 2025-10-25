@@ -97,6 +97,11 @@ JFX_SDK     := $(LIB)/javafx-sdk-25
 JFX_LIB     := $(JFX_SDK)/lib
 JFX_MODS    := javafx.controls,javafx.fxml
 
+# APP
+JAR_NAME := app.jar
+APP_NAME := MyApp
+MAIN_CLASS := Main
+
 ##########################
 #         RULES          #
 ##########################
@@ -135,7 +140,12 @@ run: compile
 		--module-path "$(JFX_LIB)"\
 		--add-modules $(JFX_MODS)\
 		--enable-native-access javafx.graphics\
-		-cp "$(BIN);$(ANTLR_JAR)" game.Engine
+		-cp "$(BIN);$(ANTLR_JAR)" $(MAIN_CLASS)
+
+jar: compile
+	@echo Creating executable JAR: $(JAR_NAME)
+	@cd $(BIN) && jar --create --file="../$(JAR_NAME)" --main-class=$(MAIN_CLASS) -C . .
+
 
 # Clean
 .PHONY: clean
