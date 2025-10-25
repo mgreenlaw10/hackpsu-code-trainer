@@ -4,9 +4,11 @@ import javafx.scene.image.Image;
 
 public class GameObject {
 
+	String name;
 	Image image;
 
-	public GameObject(Image pImage) {
+	public GameObject(String pName, Image pImage) {
+		name = pName;
 		image = pImage;
 	}
 
@@ -16,6 +18,6 @@ public class GameObject {
 
 	@Override
 	public GameObject clone() {
-		return new GameObject(image);
+		return new GameObject(name, image);
 	}
 }

@@ -10,11 +10,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
 import java.net.URL;
 import java.lang.IllegalStateException;
+
+import game.math.Direction;
 
 public class Engine extends Application {
 
@@ -26,21 +29,47 @@ public class Engine extends Application {
 	final String GUIPATH = "/res/fxml/GameGui.fxml";
 	//final String ICONPATH = "/res/image/rh-icon.png";
 
+	final int MINWIDTH = 900;
+	final int MINHEIGHT = 600;
+
 	@Override
 	public void start(Stage pStage) {
 		Parent root = loadGUI(GUIPATH);
 		Scene mainScene = new Scene(root);
 		pStage.setScene(mainScene);
 		//pStage.getIcons().add(makeImage(ICONPATH));
+		pStage.setMinWidth(MINWIDTH);
+		pStage.setMinHeight(MINHEIGHT);
 		pStage.setTitle(APPNAME);
 		pStage.show();
 		stage = pStage;
+
+		// kb input
+		mainScene.setOnKeyPressed(this::handleKeyPress);
+		root.requestFocus();
 
 		updateTimer = new UpdateTimer(this);
 		updateTimer.start();
 	}
 
-	Parent loadGUI(String path) {
+	private void handleKeyPress(KeyEvent e) {
+		switch (e.getCode()) {
+			case W -> {
+				mainController.getLevelRenderer().getLevel().movePlayer(Direction.UP);
+			}
+			case A -> {
+				mainController.getLevelRenderer().getLevel().movePlayer(Direction.LEFT);
+			}
+			case S -> {
+				mainController.getLevelRenderer().getLevel().movePlayer(Direction.DOWN);
+			}
+			case D -> {
+				mainController.getLevelRenderer().getLevel().movePlayer(Direction.RIGHT);
+			}
+		}
+	}
+
+	private Parent loadGUI(String path) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 			Parent gui = loader.load();

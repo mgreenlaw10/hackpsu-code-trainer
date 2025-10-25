@@ -15,27 +15,24 @@
 
             <items>
             
-                <VBox spacing="12.0" styleClass="panel" minWidth="300.0">
+                <VBox minWidth="300.0" spacing="12.0" styleClass="panel">
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
                    <children>
                        <Label styleClass="subheading" text="Code Editor" />
-                       <HBox VBox.vgrow="ALWAYS" spacing="0" styleClass="code-editor-wrapper">
+                       <HBox spacing="0" styleClass="code-editor-wrapper" VBox.vgrow="ALWAYS">
                            <children>
                                
-                               <TextArea fx:id="lineNumbers" editable="false" focusTraversable="false" 
-                                         styleClass="line-numbers" prefWidth="50.0" wrapText="false" 
-                                         text="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11&#10;12&#10;13&#10;14&#10;15&#10;16&#10;17&#10;18&#10;19&#10;20&#10;21&#10;22&#10;23&#10;24&#10;25&#10;26&#10;27&#10;28&#10;29&#10;30" />
+                               <TextArea fx:id="lineNumbers" editable="false" focusTraversable="false" prefWidth="50.0" styleClass="line-numbers" text="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11&#10;12&#10;13&#10;14&#10;15&#10;16&#10;17&#10;18&#10;19&#10;20&#10;21&#10;22&#10;23&#10;24&#10;25&#10;26&#10;27&#10;28&#10;29&#10;30" wrapText="false" />
                                
-                               <TextArea fx:id="codeEditor" promptText="CODE HERE" styleClass="code-editor" 
-                                         wrapText="false" HBox.hgrow="ALWAYS" />
+                               <TextArea fx:id="codeEditor" promptText="CODE HERE" styleClass="code-editor" wrapText="false" HBox.hgrow="ALWAYS" />
                            </children>
                        </HBox>
                    </children>
                 </VBox>
 
-                <VBox spacing="12.0" styleClass="panel" minWidth="300.0">
+                <VBox minWidth="300.0" spacing="12.0" styleClass="panel">
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
@@ -43,8 +40,8 @@
                         
                         <HBox spacing="8.0">
                             <children>
-                                <Button fx:id="gameTabButton" text="Game" styleClass="tab-button, tab-active" onAction="#showGameTab" prefWidth="80.0" />
-                                <Button fx:id="docsTabButton" text="Docs" styleClass="tab-button" onAction="#showDocsTab" prefWidth="80.0" />
+                                <Button fx:id="gameTabButton" onAction="#showGameTab" prefWidth="80.0" styleClass="tab-button, tab-active" text="Game" />
+                                <Button fx:id="docsTabButton" onAction="#showDocsTab" prefWidth="80.0" styleClass="tab-button" text="Docs" />
                             </children>
                         </HBox>
                         
@@ -59,48 +56,62 @@
                                 </StackPane>
                                 
                                 
-                                <ScrollPane fx:id="docsTabContent" styleClass="docs-container" visible="false" fitToWidth="true">
+                                <ScrollPane fx:id="docsTabContent" fitToWidth="true" styleClass="docs-container" visible="false">
                                     <content>
                                         <VBox spacing="20.0" styleClass="docs-content">
                                             <padding>
-                                                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                             </padding>
-                                            
-                                            
-                                            <Label text="Game Documentation" styleClass="docs-title" />
-                                            
-                                            
-                                            <VBox spacing="8.0">
-                                                <Label text="How to Play" styleClass="docs-section-title" />
-                                                <Label text="Description of how the game works..." styleClass="docs-text" wrapText="true" />
-                                            </VBox>
-                                            
-                                            
-                                            <VBox spacing="8.0">
-                                                <Label text="Keywords" styleClass="docs-section-title" />
-                                                
-                                                
-                                                <HBox spacing="12.0" styleClass="docs-keyword">
-                                                    <Label text="keyword()" styleClass="docs-keyword-name" minWidth="120.0" />
-                                                    <Label text="Description of what this keyword does" styleClass="docs-text" wrapText="true" HBox.hgrow="ALWAYS" />
-                                                </HBox>
-                                                
-                                                <HBox spacing="12.0" styleClass="docs-keyword">
-                                                    <Label text="keyword(param)" styleClass="docs-keyword-name" minWidth="120.0" />
-                                                    <Label text="Description with parameter explanation" styleClass="docs-text" wrapText="true" HBox.hgrow="ALWAYS" />
-                                                </HBox>
-                                                
-                                                <HBox spacing="12.0" styleClass="docs-keyword">
-                                                    <Label text="keyword(x, y)" styleClass="docs-keyword-name" minWidth="120.0" />
-                                                    <Label text="Description with multiple parameters" styleClass="docs-text" wrapText="true" HBox.hgrow="ALWAYS" />
-                                                </HBox>
-                                            </VBox>
-                                            
-                                            
-                                            <VBox spacing="8.0">
-                                                <Label text="Examples" styleClass="docs-section-title" />
-                                                <Label text="keyword()&#10;keyword(5)&#10;keyword(10, 20)" styleClass="docs-code-block" />
-                                            </VBox>
+                                           <children>
+                                               
+                                               
+                                               <Label styleClass="docs-title" text="Game Documentation" />
+                                               
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="How to Play" />
+                                                      <Label styleClass="docs-text" text="Description of how the game works..." wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                               
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Keywords" />
+                                                      
+                                                      
+                                                      <HBox spacing="12.0" styleClass="docs-keyword">
+                                                         <children>
+                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="keyword()" />
+                                                             <Label styleClass="docs-text" text="Description of what this keyword does" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      
+                                                      <HBox spacing="12.0" styleClass="docs-keyword">
+                                                         <children>
+                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="keyword(param)" />
+                                                             <Label styleClass="docs-text" text="Description with parameter explanation" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      
+                                                      <HBox spacing="12.0" styleClass="docs-keyword">
+                                                         <children>
+                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="keyword(x, y)" />
+                                                             <Label styleClass="docs-text" text="Description with multiple parameters" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                  </children>
+                                               </VBox>
+                                               
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Examples" />
+                                                      <Label styleClass="docs-code-block" text="keyword()&#10;keyword(5)&#10;keyword(10, 20)" />
+                                                  </children>
+                                               </VBox>
+                                           </children>
                                         </VBox>
                                     </content>
                                 </ScrollPane>

@@ -28,16 +28,6 @@
     -fx-padding: 0;
 }
 
-/* Dynamic Canvas - Fills Container */
-.dynamic-canvas {
-    -fx-min-width: 0;
-    -fx-min-height: 0;
-    -fx-pref-width: Infinity;
-    -fx-pref-height: Infinity;
-    -fx-max-width: Infinity;
-    -fx-max-height: Infinity;
-}
-
 /* Buttons */
 .button {
     -fx-background-color: #1C2130;

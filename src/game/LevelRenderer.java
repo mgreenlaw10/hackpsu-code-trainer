@@ -14,8 +14,13 @@ public class LevelRenderer {
 	Level level;
 	Canvas canvas;
 
+	final int WIDTH = 500;
+	final int HEIGHT = 500;
+
 	public LevelRenderer(Canvas pCanvas) {
 		canvas = pCanvas;
+		canvas.setWidth(WIDTH);
+		canvas.setHeight(HEIGHT);
 	}
 
 	public void setLevel(Level pLevel) {
@@ -91,5 +96,9 @@ public class LevelRenderer {
 	private double getTileDrawSize(int levelSize) {
 		double cw = canvas.getWidth();
 		return cw / (double)levelSize;
+	}
+
+	public Level getLevel() {
+		return level;
 	}
 }
