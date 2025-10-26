@@ -324,6 +324,10 @@ public class GameController {
 			case 1:
 				level = LevelTemplates.getLevel2();
 				break;
+			case 2:
+				level = LevelTemplates.getLevel3();
+				break;
+
 			default:
 				// If no more levels, loop back to first level
 				level = LevelTemplates.getLevel1();
@@ -351,7 +355,7 @@ public class GameController {
 	}
 	
 	// Advance to next level
-	private void nextLevel() {
+	public void nextLevel() {
 		loadLevel(currentLevelIndex + 1);
 	}
 }

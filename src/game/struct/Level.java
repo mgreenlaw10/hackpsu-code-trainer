@@ -123,7 +123,6 @@ public class Level {
 				dx = 1;
 			}
 		}
-		remove(player);
 		// peek at the space we're about to move to
 		GameObject peek = getObjectAt(pos.x + dx, pos.y + dy);
 		if (peek != null) {
@@ -133,9 +132,53 @@ public class Level {
 				// if move into monster, die
 				return false;
 			}
+			else if (peek.getName().equals("wall")) {
+				// if hit wall, don't die but don't move either
+				return true;
+			}
+			else if (peek.getName().equals("meat")) {
+				player.updateEnergy(3);
+			}
 		}
+		remove(player);
 		insert(player, pos.x + dx, pos.y + dy);
 		return true;
+	}
+
+	public boolean playerAttack(int num) {
+		var player = getPlayer();
+		var pos = getPosition(player);
+		player.updateEnergy(-num);
+		if (player.getEnergy() < 0) {
+			return false;
+		}
+		int dx = 0;
+		int dy = 0;
+		switch (player.getDirection()) {
+			case UP -> {
+				if (pos.y == 0) return true;
+				dy = -1;
+			}
+			case DOWN -> {
+				if (pos.y == size - 1) return true;
+				dy = 1;
+			}
+			case LEFT -> {
+				if (pos.x == 0) return true;
+				dx = -1;
+			}
+			case RIGHT -> {
+				if (pos.x == size - 1) return true;
+				dx = 1;
+			}
+		}
+		GameObject peek = getObjectAt(pos.x + dx, pos.y + dy);
+		if (peek instanceof Monster m) {
+			m.damage(num);
+			System.out.println(m.getHealth());
+		}
+		return true;
+		//System.out.println("ATTACK");
 	}
 
 	public void saveStateAsOriginal() {
@@ -144,6 +187,15 @@ public class Level {
 
 	public void restoreOriginalState() {
 		tileMap = deepCopyTileMap(originalState, size);
+		// find all monsters and reset their states
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				GameObject obj = tileMap[i][j];
+				if (obj instanceof Monster m) {
+					m.resetState();
+				}
+			}
+		}
 	}
 
 	public GameObject[][] deepCopyTileMap(GameObject[][] map, int size) {
@@ -158,7 +210,14 @@ public class Level {
 		return copy;
 	}
 
-	public void playerAttack(int num) {
-		//System.out.println("ATTACK");
+	public void removeDeadMonsters() {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				GameObject obj = tileMap[i][j];
+				if (obj instanceof Monster m && m.isDead()) {
+					remove(m);
+				}
+			}
+		}
 	}
 }

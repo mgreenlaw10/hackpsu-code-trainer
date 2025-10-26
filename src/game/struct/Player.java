@@ -9,6 +9,7 @@ public class Player extends GameObject {
 	
 	int coins;
 	int energy;
+	final int MAXENERGY = 5;
 	Direction direction;
 
 	final Image walkImage = Engine.makeImage("/res/image/knight.png");
@@ -31,6 +32,12 @@ public class Player extends GameObject {
 
 	public int getEnergy() {
 		return energy;
+	}
+
+	public void updateEnergy(int diff) {
+		energy += diff;
+		if (energy >= MAXENERGY)
+			energy = MAXENERGY;
 	}
 
 	public void resetState() {

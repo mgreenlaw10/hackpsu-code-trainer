@@ -26,7 +26,12 @@ move(RIGHT)
 move(RIGHT)
 move(RIGHT)
 
+Level 2:
 
 move(DOWN)
-aim(UP)
-attack(1)
+move(DOWN)
+move(DOWN)
+move(RIGHT)
+attack(3)
+move(RIGHT)
+move(RIGHT)

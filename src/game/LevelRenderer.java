@@ -4,15 +4,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import game.math.Vec2d;
 import game.struct.Level;
 import game.struct.GameObject;
 import game.struct.Player;
+import game.struct.Monster;
 
 public class LevelRenderer {
-	
 
+	int levelNum;
 	Level level;
 	Canvas canvas;
 	GameController controller;
@@ -22,6 +25,7 @@ public class LevelRenderer {
 	final int HEIGHT = 600;
 
 	public LevelRenderer(Canvas pCanvas) {
+		levelNum = 1;
 		canvas = pCanvas;
 		canvas.setWidth(WIDTH);
 		canvas.setHeight(HEIGHT);
@@ -138,6 +142,16 @@ public class LevelRenderer {
 					}
 					
 					graphics.restore();
+				}
+				else if (obj instanceof Monster monster) {
+					Image img = monster.getImage();
+					int health = monster.getHealth();
+					graphics.drawImage(img, dx, dy, is, is);
+					graphics.save();
+					graphics.setFont(new Font("Consolas", 48));
+					graphics.setFill(Color.WHITE);
+					drawCenteredText(graphics, health + "", dx + is/2, dy + is/2);
+					graphics.restore();
 				}	
 				else if (obj != null) {
 					Image img = obj.getImage();
@@ -170,5 +184,19 @@ public class LevelRenderer {
 		graphics.translate(x + w / 2, y + h / 2);
 		graphics.rotate(90 * count);
 		graphics.translate(-(w / 2), -(h / 2));
+	}
+
+	void drawCenteredText(GraphicsContext graphics, String text, double cx, double cy) {
+		Font font = graphics.getFont(); // use current font
+	    Text tempText = new Text(text);
+	    tempText.setFont(font);
+
+	    double width = tempText.getLayoutBounds().getWidth();
+	    double height = tempText.getLayoutBounds().getHeight();
+
+	    double x = cx - width / 2.0;
+	    double y = cy + height / 4.0;
+
+	    graphics.fillText(text, x, y);
 	}
 }

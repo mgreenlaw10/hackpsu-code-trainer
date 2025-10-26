@@ -71,6 +71,8 @@ public class Interpreter {
 
 	        	StatementExtractor.Statement statement = StatementExtractor.parseLine(line);
 	        	interpretStatement(statement);
+	        	controller.updateStats();
+	        	controller.getLevelRenderer().getLevel().removeDeadMonsters();
 	            //interpretLine(line);
 	        }
 	        else {
@@ -81,13 +83,14 @@ public class Interpreter {
 				// if parsing is done, check whether the level was won; if so, advance, otherwise restore original state
 				boolean won = controller.getLevelRenderer().getLevel().getWinCondition().getAsBoolean();
 				if (won) {
-					controller.getLevelRenderer().setLevel(LevelTemplates.getLevel2());
+					//controller.getLevelRenderer().goNextLevel();
 				}
 				else {
 					controller.getLevelRenderer().getLevel().restoreOriginalState();
 				}
 				controller.clearExecutionHighlighting(); // Clear highlighting when done
 				controller.getLevelRenderer().getLevel().getPlayer().resetState();
+				controller.updateStats();
 	        }
         }
         catch (Exception e) {
@@ -132,7 +135,10 @@ public class Interpreter {
 
     private void executeAttack(int num) {
     	controller.getLevelRenderer().getLevel().getPlayer().setAttacking();
-    	controller.getLevelRenderer().getLevel().playerAttack(num);
+    	if (!controller.getLevelRenderer().getLevel().playerAttack(num)) {
+    		cancelExecution();
+    	}
+    	
     }
 
     private void executeAim(Direction dir) {
