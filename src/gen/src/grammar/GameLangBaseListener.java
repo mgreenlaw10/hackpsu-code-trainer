@@ -41,25 +41,13 @@ public class GameLangBaseListener implements GameLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCallRepeat(GameLangParser.CallRepeatContext ctx) { }
+	@Override public void enterCallAttack(GameLangParser.CallAttackContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCallRepeat(GameLangParser.CallRepeatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCloseScope(GameLangParser.CloseScopeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCloseScope(GameLangParser.CloseScopeContext ctx) { }
+	@Override public void exitCallAttack(GameLangParser.CallAttackContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,0 +1,12 @@
+T__0=1
+T__1=2
+MOVE=3
+ATTACK=4
+DIR=5
+NUM=6
+END=7
+WS=8
+'('=1
+')'=2
+'move'=3
+'attack'=4

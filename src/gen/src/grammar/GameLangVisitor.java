@@ -23,15 +23,9 @@ public interface GameLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCallMove(GameLangParser.CallMoveContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GameLangParser#callRepeat}.
+	 * Visit a parse tree produced by {@link GameLangParser#callAttack}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCallRepeat(GameLangParser.CallRepeatContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GameLangParser#closeScope}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCloseScope(GameLangParser.CloseScopeContext ctx);
+	T visitCallAttack(GameLangParser.CallAttackContext ctx);
 }
