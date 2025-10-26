@@ -200,6 +200,11 @@
     -fx-font-weight: bold;
 }
 
+.code-editor .number {
+    -fx-fill: #b5cea8; /* Light green for numbers like VS Code */
+    -fx-font-weight: normal;
+}
+
 /* Line number styling with separator line */
 .code-editor .lineno {
     -fx-background-color: #1e1e1e;
@@ -473,12 +478,38 @@
     -fx-background-color: #2d2d30;
     -fx-background-radius: 6px;
     -fx-padding: 12px 16px;
-    -fx-text-fill: #0078d4;
     -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
     -fx-font-size: 13px;
     -fx-border-color: #3e3e42;
     -fx-border-width: 1px;
     -fx-border-radius: 6px;
+}
+
+/* Color-coded text styles for documentation examples */
+.code-function {
+    -fx-fill: #dcdcaa;
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.code-constant {
+    -fx-fill: #ce9178;
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.code-number {
+    -fx-fill: #b5cea8;
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-font-size: 13px;
+}
+
+.code-default {
+    -fx-fill: #d4d4d4;
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-font-size: 13px;
 }
 
 /* Win Overlay */
