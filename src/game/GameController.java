@@ -278,7 +278,7 @@ public class GameController {
 		winMessage.getStyleClass().add("win-message");
 		
 		// ccreate next level button
-		Button nextButton = new Button("Next Level");
+		Button nextButton = new Button("Continue");
 		nextButton.getStyleClass().addAll("button", "primary");
 		nextButton.setOnAction(e -> {
 			hideWinScreen();
