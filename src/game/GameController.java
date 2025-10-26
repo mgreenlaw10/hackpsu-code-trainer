@@ -278,7 +278,7 @@ public class GameController {
 		winMessage.getStyleClass().add("win-message");
 		
 		// ccreate next level button
-		Button nextButton = new Button("Next Level");
+		Button nextButton = new Button("Continue");
 		nextButton.getStyleClass().addAll("button", "primary");
 		nextButton.setOnAction(e -> {
 			hideWinScreen();
@@ -327,7 +327,6 @@ public class GameController {
 			case 2:
 				level = LevelTemplates.getLevel3();
 				break;
-
 			default:
 				// If no more levels, loop back to first level
 				level = LevelTemplates.getLevel1();
@@ -355,7 +354,7 @@ public class GameController {
 	}
 	
 	// Advance to next level
-	public void nextLevel() {
+	private void nextLevel() {
 		loadLevel(currentLevelIndex + 1);
 	}
 }
