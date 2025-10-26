@@ -159,6 +159,6 @@ public class Level {
 	}
 
 	public void playerAttack(int num) {
-		System.out.println("ATTACK");
+		//System.out.println("ATTACK");
 	}
 }
