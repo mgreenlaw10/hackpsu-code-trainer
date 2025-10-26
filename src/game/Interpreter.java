@@ -32,6 +32,10 @@ public class Interpreter {
 		controller = pController;
 	}
 
+	public void setDelay(long pDelay) {
+		delay = pDelay;
+	}
+
 	BufferedReader reader;
 	TimerEvent activeInterpretEvent;
 
@@ -48,6 +52,10 @@ public class Interpreter {
 	}
 
 	void interpretNextFromMemory() {
+		if (reader == null) {
+			return; // Exit early if reader is null
+		}
+		
 		String line;
         // interpret line-by-line
         try {

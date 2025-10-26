@@ -4,10 +4,11 @@ import javafx.fxml.FXML;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import org.fxmisc.richtext.CodeArea;
 
 import game.struct.Level;
 import game.struct.GameObject;
@@ -21,9 +22,10 @@ public class GameController {
 	@FXML private AnchorPane root;
 	@FXML private Canvas gameCanvas;
 	@FXML private Button runButton;
-	@FXML private TextArea codeEditor;
-
-	// Tab controls
+	@FXML private CodeArea codeEditor;
+	@FXML private Slider speedSlider;
+	
+	
 	@FXML private Button gameTabButton;
 	@FXML private Button docsTabButton;
 	@FXML private StackPane gameTabContent;
@@ -32,6 +34,13 @@ public class GameController {
 	@FXML private void initialize() {
 		levelRenderer = new LevelRenderer(gameCanvas);
 		codeInterpreter = new Interpreter(this);
+		
+		// Enable line numbers for code editor
+		codeEditor.setParagraphGraphicFactory(line -> {
+			javafx.scene.control.Label lineNum = new javafx.scene.control.Label(String.valueOf(line + 1));
+			lineNum.getStyleClass().add("lineno");
+			return lineNum;
+		});
 
 		Level testLevel = new Level(10);
 		GameObject dog = new GameObject("dog", Engine.makeImage("/res/image/dog.png"));
@@ -41,9 +50,10 @@ public class GameController {
 		testLevel.insert(zyn.clone(), 6, 5);
 		testLevel.insert(zyn.clone(), 7, 5);
 		testLevel.insert(zyn.clone(), 8, 5);
-		testLevel.saveStateAsOriginal();
+		//testLevel.remove(zyn);
 
 		levelRenderer.setLevel(testLevel);
+		testLevel.saveStateAsOriginal();
 		UpdateTimer.addDrawRoutine(levelRenderer::draw);
 	}
 
@@ -73,6 +83,8 @@ public class GameController {
 	}
 
 	@FXML void runCode() {
+		long delay = (long) speedSlider.getValue();
+		codeInterpreter.setDelay(delay);
 		codeInterpreter.interpretText(codeEditor.getText());
 	}
 
