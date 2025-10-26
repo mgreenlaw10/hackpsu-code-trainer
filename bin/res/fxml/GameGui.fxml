@@ -106,20 +106,20 @@
                                                <VBox spacing="8.0">
                                                   <children>
                                                       <Label styleClass="docs-section-title" text="Level 1" />
-                                                      <Label styleClass="docs-text" text="level 1 info" wrapText="true" />
+                                                      <Label styleClass="docs-text" text="Navigate through the map using your movement commands. Your goal is to collect all the coins scattered across the level. Once every coin is collected, you’ll advance to the next stage." wrapText="true" />
                                                   </children>
                                                </VBox>
                                                
                                                <VBox spacing="8.0">
                                                   <children>
                                                       <Label styleClass="docs-section-title" text="Level 2" />
-                                                      <Label styleClass="docs-text" text="level 2 info" wrapText="true" />
+                                                      <Label styleClass="docs-text" text="Strategically move toward the monster and use the correct energy amouny to defeat it. After eliminating the threat, collect the coin to unlock the next level." wrapText="true" />
                                                   </children>
                                                </VBox>
                                                       <VBox spacing="8.0">
                                                   <children>
                                                       <Label styleClass="docs-section-title" text="Level 3" />
-                                                      <Label styleClass="docs-text" text="level 3 info" wrapText="true" />
+                                                      <Label styleClass="docs-text" text="Plan your moves carefully. Consuming meat will grant you +3 energy, which is essential for survival. If you run out of energy, you lose the level. Defeat all monsters efficiently, collect the coin, and secure your path forward." wrapText="true" />
                                                   </children>
                                                </VBox>
                                                
@@ -163,7 +163,19 @@
                                                       <HBox spacing="12.0" styleClass="docs-keyword">
                                                          <children>
                                                              <Label minWidth="120.0" styleClass="docs-keyword-name" text="attack()" />
-                                                             <Label styleClass="docs-text" text="This function allows your character to attack enemies by consuming energy. It accepts an integer parameter indicating how much energy will be used for the attack." wrapText="true" HBox.hgrow="ALWAYS" />
+                                                             <Label styleClass="docs-text" text="This function allows your character to attack enemies by consuming energy. It accepts an integer parameter indicating how much energy will be used for the attack, and how much damage will be applied to the enemy." wrapText="true" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox spacing="12.0" styleClass="docs-keyword">
+                                                         <children>
+                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="aim()" />
+                                                             <Label styleClass="docs-text" text="This function simply points your character in a particular direction. This is useful because attacks will only trigger in the direction that you are facing." wrapText="true" HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox spacing="12.0" styleClass="docs-keyword">
+                                                         <children>
+                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="Parameters" />
+                                                             <Label styleClass="docs-text" text="The move() and aim() functions require a Direction as an argument. A Direction is either UP, DOWN, LEFT, or RIGHT. The attack() function requires an integer argument." wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
                                                   </children>
@@ -188,6 +200,14 @@
                                                                   <Text styleClass="code-function" text="move" />
                                                                   <Text styleClass="code-default" text="(" />
                                                                   <Text styleClass="code-constant" text="RIGHT" />
+                                                                  <Text styleClass="code-default" text=")" />
+                                                               </children>
+                                                            </TextFlow>
+                                                            <TextFlow>
+                                                               <children>
+                                                                  <Text styleClass="code-function" text="aim" />
+                                                                  <Text styleClass="code-default" text="(" />
+                                                                  <Text styleClass="code-constant" text="LEFT" />
                                                                   <Text styleClass="code-default" text=")" />
                                                                </children>
                                                             </TextFlow>
