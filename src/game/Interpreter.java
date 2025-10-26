@@ -27,6 +27,7 @@ public class Interpreter {
 	GameController controller;
 
 	long delay = 500;
+	private int currentLineNumber = 0;
 
 	public Interpreter(GameController pController) {
 		controller = pController;
@@ -36,11 +37,16 @@ public class Interpreter {
 		delay = pDelay;
 	}
 
+	public int getCurrentLineNumber() {
+		return currentLineNumber;
+	}
+
 	BufferedReader reader;
 	TimerEvent activeInterpretEvent;
 
 	public void interpretText(String text) {
 		// create iterator over codeEditor lines
+		currentLineNumber = 0; // Reset line counter
 		try {
 			BufferedReader newReader = new BufferedReader(new StringReader(text));
 	        reader = newReader;
@@ -60,6 +66,8 @@ public class Interpreter {
         // interpret line-by-line
         try {
 	        if ((line = reader.readLine()) != null) {
+	        	currentLineNumber++; // Increment line counter
+	        	controller.highlightExecutingLine(currentLineNumber - 1); // Highlight current line (0-indexed)
 	            interpretLine(line);
 	        }
 	        else {
@@ -68,6 +76,7 @@ public class Interpreter {
 	        	reader = null;
 	        	UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
 	        	controller.getLevelRenderer().getLevel().restoreOriginalState();
+	        	controller.clearExecutionHighlighting(); // Clear highlighting when done
 	        }
         }
         catch (Exception e) {

@@ -184,6 +184,22 @@
     -fx-background-color: #2a2d2e;
 }
 
+/* Execution Line Highlighting - Bright blue for currently executing line */
+.code-editor .executing-line {
+    -fx-background-color: #264f78; /* VS Code blue background for executing line */
+}
+
+/* Syntax Highlighting - VS Code Style */
+.code-editor .function {
+    -fx-fill: #dcdcaa; /* Light blue for functions like VS Code */
+    -fx-font-weight: bold;
+}
+
+.code-editor .constant {
+    -fx-fill: #ce9178; /* Orange for constants like VS Code */
+    -fx-font-weight: bold;
+}
+
 /* Line number styling with separator line */
 .code-editor .lineno {
     -fx-background-color: #1e1e1e;
@@ -193,6 +209,8 @@
     -fx-alignment: center-right;
     -fx-padding: 0 12px 0 8px;
     -fx-text-alignment: right;
+    -fx-min-width: 45px;
+    -fx-pref-width: 45px;
 }
 
 /* Vertical separator line between line numbers and code */
@@ -200,6 +218,8 @@
     -fx-border-color: transparent #3e3e42 transparent transparent;
     -fx-border-width: 0 1px 0 0;
     -fx-border-style: solid;
+    -fx-min-width: 45px;
+    -fx-pref-width: 45px;
 }
 
 /* Line number container */
