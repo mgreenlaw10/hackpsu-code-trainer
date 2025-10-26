@@ -13,6 +13,8 @@ public class LevelRenderer {
 
 	Level level;
 	Canvas canvas;
+	GameController controller;
+	boolean wasWon = false;
 
 	final int WIDTH = 600;
 	final int HEIGHT = 600;
@@ -25,6 +27,15 @@ public class LevelRenderer {
 
 	public void setLevel(Level pLevel) {
 		level = pLevel;
+		wasWon = false; // Reset win state when level changes
+	}
+
+	public void setController(GameController pController) {
+		controller = pController;
+	}
+	
+	public void resetWinState() {
+		wasWon = false;
 	}
 
 	public void draw() {
@@ -43,6 +54,20 @@ public class LevelRenderer {
 
 		drawTileGrid(graphics, cw, ch);
 		drawTileObjects(graphics, cw, ch);
+		
+		// Check win condition and show win screen if won
+		if (level.getWinCondition() != null && controller != null) {
+			boolean isWon = level.getWinCondition().getAsBoolean();
+			if (isWon && !wasWon) {
+				wasWon = true;
+				// Delay showing the win screen slightly to allow final render
+				javafx.application.Platform.runLater(() -> {
+					controller.showWinScreen();
+				});
+			} else if (!isWon && wasWon) {
+				wasWon = false;
+			}
+		}
 	}
 
 	private void drawTileGrid(GraphicsContext graphics, double cw, double ch) {
