@@ -80,9 +80,14 @@ public class Interpreter {
 	        	UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
 				// if parsing is done, check whether the level was won; if so, advance, otherwise restore original state
 				boolean won = controller.getLevelRenderer().getLevel().getWinCondition().getAsBoolean();
-				if (won) controller.getLevelRenderer().setLevel(LevelTemplates.getLevel2());
-				else controller.getLevelRenderer().getLevel().restoreOriginalState();
+				if (won) {
+					controller.getLevelRenderer().setLevel(LevelTemplates.getLevel2());
+				}
+				else {
+					controller.getLevelRenderer().getLevel().restoreOriginalState();
+				}
 				controller.clearExecutionHighlighting(); // Clear highlighting when done
+				controller.getLevelRenderer().getLevel().getPlayer().resetState();
 	        }
         }
         catch (Exception e) {
@@ -107,10 +112,13 @@ public class Interpreter {
 	}
 
     private void executeMove(Direction dir) {
+    	controller.getLevelRenderer().getLevel().getPlayer().setDirection(dir);
+    	controller.getLevelRenderer().getLevel().getPlayer().setWalking();
     	controller.getLevelRenderer().getLevel().movePlayer(dir);
     }
 
     private void executeAttack(int num) {
+    	controller.getLevelRenderer().getLevel().getPlayer().setAttacking();
     	controller.getLevelRenderer().getLevel().playerAttack(num);
     }
 

@@ -29,7 +29,7 @@ public class Engine extends Application {
 	final String GUIPATH = "/res/fxml/StartScreen.fxml";
 	//final String ICONPATH = "/res/image/rh-icon.png";
 
-	final int MINWIDTH = 900;
+	final int MINWIDTH = 1220;
 	final int MINHEIGHT = 750;
 
 	@Override

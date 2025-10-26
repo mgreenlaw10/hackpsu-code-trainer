@@ -14,6 +14,8 @@ public class LevelRenderer {
 
 	Level level;
 	Canvas canvas;
+	GameController controller;
+	boolean wasWon = false;
 
 	final int WIDTH = 600;
 	final int HEIGHT = 600;
@@ -26,6 +28,15 @@ public class LevelRenderer {
 
 	public void setLevel(Level pLevel) {
 		level = pLevel;
+		wasWon = false; // Reset win state when level changes
+	}
+
+	public void setController(GameController pController) {
+		controller = pController;
+	}
+	
+	public void resetWinState() {
+		wasWon = false;
 	}
 
 	public void draw() {
@@ -44,6 +55,20 @@ public class LevelRenderer {
 
 		drawTileGrid(graphics, cw, ch);
 		drawTileObjects(graphics, cw, ch);
+		
+		// Check win condition and show win screen if won
+		if (level.getWinCondition() != null && controller != null) {
+			boolean isWon = level.getWinCondition().getAsBoolean();
+			if (isWon && !wasWon) {
+				wasWon = true;
+				// Delay showing the win screen slightly to allow final render
+				javafx.application.Platform.runLater(() -> {
+					controller.showWinScreen();
+				});
+			} else if (!isWon && wasWon) {
+				wasWon = false;
+			}
+		}
 	}
 
 	private void drawTileGrid(GraphicsContext graphics, double cw, double ch) {
@@ -95,20 +120,22 @@ public class LevelRenderer {
 					graphics.save();
 					switch (player.getDirection()) {
 						case UP -> {
-
+							rotate90(graphics, dx, dy, is, is, 1);
+							graphics.drawImage(img, 0, 0, is, is);
 						}
 						case DOWN -> {
-							rotate90(graphics, dx, dy, is, is);
-							graphics.drawImage(img, -is / 2, -is / 2);
+							rotate90(graphics, dx, dy, is, is, 3);
+							graphics.drawImage(img, 0, 0, is, is);
 						}
 						case LEFT -> {
-							break; // default
+							graphics.drawImage(img, dx, dy, is, is);
 						}
 						case RIGHT -> {
 							hflip(graphics, dx, dy, is);
 							graphics.drawImage(img, 0, 0, is, is);
 						}
 					}
+					
 					graphics.restore();
 				}	
 				else if (obj != null) {
@@ -133,8 +160,14 @@ public class LevelRenderer {
 		graphics.scale(-1, 1);
 	}
 
-	void rotate90(GraphicsContext graphics, double x, double y, double w, double h) {
+	void vflip(GraphicsContext graphics, double x, double y, double h) { 
+		graphics.translate(x, y + h);
+		graphics.scale(1, -1);
+	}
+
+	void rotate90(GraphicsContext graphics, double x, double y, double w, double h, int count) {
 		graphics.translate(x + w / 2, y + h / 2);
-		graphics.rotate(90);
+		graphics.rotate(90 * count);
+		graphics.translate(-(w / 2), -(h / 2));
 	}
 }

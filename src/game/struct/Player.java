@@ -1,8 +1,9 @@
 package game.struct;
 
 import game.Engine;
-
 import game.math.Direction;
+
+import javafx.scene.image.Image;
 
 public class Player extends GameObject {
 	
@@ -10,10 +11,14 @@ public class Player extends GameObject {
 	int energy;
 	Direction direction;
 
+	final Image walkImage = Engine.makeImage("/res/image/knight.png");
+	final Image attackImage = Engine.makeImage("/res/image/attack.png");
+
 	public Player() {
 		super("player", Engine.makeImage("/res/image/knight.png"));
 		direction = Direction.RIGHT;
 		coins = 0;
+		energy = 5;
 	}
 
 	public void addCoin() { 
@@ -24,8 +29,21 @@ public class Player extends GameObject {
 		return coins;
 	}
 
+	public void resetState() {
+		coins = 0;
+		energy = 5;
+	}
+
+	public void setWalking() {
+		image = walkImage;
+	}
+
+	public void setAttacking() {
+		image = attackImage;
+	}
+
 	public void setDirection(Direction dir) {
-		dir = direction;
+		direction = dir;
 	}
 	public Direction getDirection() {
 		return direction;

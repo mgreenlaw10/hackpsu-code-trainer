@@ -20,6 +20,10 @@ public class GameObject {
 		return image;
 	}
 
+	public void setImage(Image pImage) {
+		image = pImage;
+	}
+
 	@Override
 	public GameObject clone() {
 		return new GameObject(name, image);

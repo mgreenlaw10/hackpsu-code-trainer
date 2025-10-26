@@ -9,6 +9,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import org.fxmisc.richtext.CodeArea;
@@ -27,12 +30,16 @@ public class GameController {
 	private Engine engine;
 	private LevelRenderer levelRenderer;
 	private Interpreter codeInterpreter;
+	
+	// Track current level index
+	private int currentLevelIndex = 0;
 
 	@FXML private AnchorPane root;
 	@FXML private Canvas gameCanvas;
 	@FXML private Button runButton;
 	@FXML private CodeArea codeEditor;
 	@FXML private Slider speedSlider;
+	@FXML private Label speedValueLabel;
 
 	// Tab controls
 	@FXML private Button gameTabButton;
@@ -42,8 +49,13 @@ public class GameController {
 	@FXML private ScrollPane tasksTabContent;
 	@FXML private ScrollPane docsTabContent;
 
+	// Win screen overlay components
+	private VBox winOverlay;
+	private boolean isWinScreenShowing = false;
+
 	@FXML private void initialize() {
     	levelRenderer = new LevelRenderer(gameCanvas);
+		levelRenderer.setController(this); // Set controller reference
     codeInterpreter = new Interpreter(this);
 		// Enable line numbers for code editor
 		codeEditor.setParagraphGraphicFactory(line -> {
@@ -52,8 +64,20 @@ public class GameController {
 			return lineNum;
 		});
 		setupSyntaxHighlighting();
-		levelRenderer.setLevel(LevelTemplates.getLevel1());
+		
+		// Load the first level
+		loadLevel(0);
+		
 		UpdateTimer.addDrawRoutine(levelRenderer::draw);
+		
+		// Initialize win screen overlay
+		initializeWinScreen();
+		
+		// Set up slider value label listener
+		updateSpeedLabel(speedSlider.getValue());
+		speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+			updateSpeedLabel(newVal.doubleValue());
+		});
 	}
 
 	// pseudo-constructor
@@ -212,5 +236,94 @@ public class GameController {
 			codeEditor.setParagraphStyle(i, Collections.emptyList());
 		}
 	}
+	
+	// Update the speed label to show delay in seconds
+	private void updateSpeedLabel(double milliseconds) {
+		double seconds = milliseconds / 1000.0;
+		speedValueLabel.setText(String.format("%.2fs", seconds));
+	}
+
+	// Initialize the win screen overlay
+	private void initializeWinScreen() {
+		// Create win overlay container
+		winOverlay = new VBox(20);
+		winOverlay.setAlignment(Pos.CENTER);
+		winOverlay.getStyleClass().add("win-overlay");
+		winOverlay.setVisible(false);
+		winOverlay.setManaged(false);
+		
+		// create win message
+		Label winTitle = new Label("Level Complete!");
+		winTitle.getStyleClass().add("win-title");
+		
+		Label winMessage = new Label("You solved the coding challenge!");
+		winMessage.getStyleClass().add("win-message");
+		
+		// ccreate next level button
+		Button nextButton = new Button("Next Level");
+		nextButton.getStyleClass().addAll("button", "primary");
+		nextButton.setOnAction(e -> {
+			hideWinScreen();
+			nextLevel();
+		});
+		
+	
+		
+		// Add components to overlay
+		winOverlay.getChildren().addAll(winTitle, winMessage, nextButton);
+		
+		// Add overlay to the game tab content (on top of canvas)
+		gameTabContent.getChildren().add(winOverlay);
+	}
+	
+	// Show the win screen
+	public void showWinScreen() {
+		if (!isWinScreenShowing && winOverlay != null) {
+			winOverlay.setVisible(true);
+			winOverlay.setManaged(true);
+			isWinScreenShowing = true;
+		}
+	}
+	
+	// Hide the win screen
+	public void hideWinScreen() {
+		if (isWinScreenShowing && winOverlay != null) {
+			winOverlay.setVisible(false);
+			winOverlay.setManaged(false);
+			isWinScreenShowing = false;
+		}
+	}
+	
+	// Load a specific level by index
+	private void loadLevel(int levelIndex) {
+		currentLevelIndex = levelIndex;
+		Level level = null;
+		
+		switch (levelIndex) {
+			case 0:
+				level = LevelTemplates.getLevel1();
+				break;
+			case 1:
+				level = LevelTemplates.getLevel2();
+				break;
+			default:
+				// If no more levels, loop back to first level
+				level = LevelTemplates.getLevel1();
+				currentLevelIndex = 0;
+				break;
+		}
+		
+		if (level != null) {
+			levelRenderer.setLevel(level);
+			clearExecutionHighlighting();
+		}
+	}
+	
+	// Advance to next level
+	private void nextLevel() {
+		loadLevel(currentLevelIndex + 1);
+	}
+	
+	
 
 }
