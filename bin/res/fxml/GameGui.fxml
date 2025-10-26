@@ -9,7 +9,7 @@
 <?import javafx.geometry.Insets?>
 <?import org.fxmisc.richtext.CodeArea?>
 
-<AnchorPane minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
+<AnchorPane minHeight="760.0" minWidth="1220.0" prefHeight="760.0" prefWidth="1280.0" styleClass="root" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
 
     <children>
         <SplitPane dividerPositions="0.45" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
