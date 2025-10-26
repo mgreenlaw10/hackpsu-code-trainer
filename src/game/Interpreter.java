@@ -127,8 +127,11 @@ public class Interpreter {
 	        	reader.close();
 	        	reader = null;
 	        	UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
-	        	controller.getLevelRenderer().getLevel().restoreOriginalState();
-	        	controller.clearExecutionHighlighting(); // Clear highlighting when done
+				// if parsing is done, check whether the level was won; if so, advance, otherwise restore original state
+				boolean won = controller.getLevelRenderer().getLevel().getWinCondition().getAsBoolean();
+				if (won) controller.getLevelRenderer().setLevel(LevelTemplates.getLevel2());
+				else controller.getLevelRenderer().getLevel().restoreOriginalState();
+				controller.clearExecutionHighlighting(); // Clear highlighting when done
 	        }
         }
         catch (Exception e) {

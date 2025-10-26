@@ -26,7 +26,7 @@ public class GameController {
 
 	private Engine engine;
 	private LevelRenderer levelRenderer;
-	private CodeInterpreter codeInterpreter;
+	private Interpreter codeInterpreter;
 
 	@FXML private AnchorPane root;
 	@FXML private Canvas gameCanvas;
@@ -43,8 +43,8 @@ public class GameController {
 	@FXML private ScrollPane docsTabContent;
 
 	@FXML private void initialize() {
-		levelRenderer = new LevelRenderer(gameCanvas);
-	codeInterpreter = new CodeInterpreter(this);
+    	levelRenderer = new LevelRenderer(gameCanvas);
+    codeInterpreter = new Interpreter(this);
 		// Enable line numbers for code editor
 		codeEditor.setParagraphGraphicFactory(line -> {
 			javafx.scene.control.Label lineNum = new javafx.scene.control.Label(String.valueOf(line + 1));
