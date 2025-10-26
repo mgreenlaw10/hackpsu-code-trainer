@@ -34,8 +34,10 @@ public class GameController {
 	
 	
 	@FXML private Button gameTabButton;
+	@FXML private Button tasksTabButton;
 	@FXML private Button docsTabButton;
 	@FXML private StackPane gameTabContent;
+	@FXML private ScrollPane tasksTabContent;
 	@FXML private ScrollPane docsTabContent;
 
 	@FXML private void initialize() {
@@ -73,23 +75,42 @@ public class GameController {
 	}
 
 	@FXML void showGameTab() {
-		// Show game content, hide docs
+		// Hide all content
 		gameTabContent.setVisible(true);
+		tasksTabContent.setVisible(false);
 		docsTabContent.setVisible(false);
 		
-		// Update button styles
-		gameTabButton.getStyleClass().add("tab-active");
+		// Update button styles - remove active from all, then add to current
+		gameTabButton.getStyleClass().remove("tab-active");
+		tasksTabButton.getStyleClass().remove("tab-active");
 		docsTabButton.getStyleClass().remove("tab-active");
+		gameTabButton.getStyleClass().add("tab-active");
+	}
+
+	@FXML void showTasksTab() {
+		// Hide all content
+		gameTabContent.setVisible(false);
+		tasksTabContent.setVisible(true);
+		docsTabContent.setVisible(false);
+		
+		// Update button styles - remove active from all, then add to current
+		gameTabButton.getStyleClass().remove("tab-active");
+		tasksTabButton.getStyleClass().remove("tab-active");
+		docsTabButton.getStyleClass().remove("tab-active");
+		tasksTabButton.getStyleClass().add("tab-active");
 	}
 
 	@FXML void showDocsTab() {
-		// Show docs content, hide game
+		// Hide all content
 		gameTabContent.setVisible(false);
+		tasksTabContent.setVisible(false);
 		docsTabContent.setVisible(true);
 		
-		// Update button styles
-		docsTabButton.getStyleClass().add("tab-active");
+		// Update button styles - remove active from all, then add to current
 		gameTabButton.getStyleClass().remove("tab-active");
+		tasksTabButton.getStyleClass().remove("tab-active");
+		docsTabButton.getStyleClass().remove("tab-active");
+		docsTabButton.getStyleClass().add("tab-active");
 	}
 
 	@FXML void runCode() {

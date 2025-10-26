@@ -25,7 +25,7 @@
                            <children>
                                <VBox spacing="4.0">
                                    <children>
-                                       <Label styleClass="slider-label" text="Speed" />
+                                       <Label styleClass="slider-label" text="Step Delay" />
                                        <Slider fx:id="speedSlider" min="100" max="2000" value="500" showTickMarks="false" showTickLabels="false" prefWidth="140.0" styleClass="speed-slider" />
                                    </children>
                                </VBox>
@@ -55,6 +55,7 @@
                         <HBox spacing="8.0">
                             <children>
                                 <Button fx:id="gameTabButton" onAction="#showGameTab" prefWidth="80.0" styleClass="tab-button, tab-active" text="Game" />
+                                <Button fx:id="tasksTabButton" onAction="#showTasksTab" prefWidth="80.0" styleClass="tab-button" text="Tasks" />
                                 <Button fx:id="docsTabButton" onAction="#showDocsTab" prefWidth="80.0" styleClass="tab-button" text="Docs" />
                             </children>
                         </HBox>
@@ -68,6 +69,42 @@
                                         <Canvas fx:id="gameCanvas" styleClass="dynamic-canvas" />
                                     </children>
                                 </StackPane>
+                                
+                                
+                                <ScrollPane fx:id="tasksTabContent" fitToWidth="true" styleClass="docs-container" visible="false">
+                                    <content>
+                                        <VBox spacing="20.0" styleClass="docs-content">
+                                            <padding>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                            </padding>
+                                           <children>
+                                               
+                                               <Label styleClass="docs-title" text="Level Tasks" />
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Level 1" />
+                                                      <Label styleClass="docs-text" text="level 1 info" wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Level 2" />
+                                                      <Label styleClass="docs-text" text="level 2 info" wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                                      <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Level 3" />
+                                                      <Label styleClass="docs-text" text="level 3 info" wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                               
+                                           </children>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
                                 
                                 
                                 <ScrollPane fx:id="docsTabContent" fitToWidth="true" styleClass="docs-container" visible="false">
