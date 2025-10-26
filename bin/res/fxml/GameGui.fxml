@@ -66,10 +66,10 @@
                         <StackPane VBox.vgrow="ALWAYS">
                             <children>
                                 
-                                <VBox fx:id="gameTabContent" styleClass="canvas-container">
+                                <VBox fx:id="gameTabContent" styleClass="canvas-container" alignment="TOP_CENTER" spacing="20.0">
                                     <children>
                                         <!-- Stats Display Box -->
-                                        <HBox styleClass="stats-box" spacing="40.0" alignment="CENTER_LEFT">
+                                        <HBox styleClass="stats-box" spacing="40.0" alignment="CENTER_LEFT" maxWidth="Infinity">
                                             <padding>
                                                 <Insets top="8.0" bottom="8.0" left="16.0" right="16.0" />
                                             </padding>
@@ -88,7 +88,7 @@
                                                 </HBox>
                                             </children>
                                         </HBox>
-                                        <Canvas fx:id="gameCanvas" styleClass="dynamic-canvas" />
+                                        <Canvas fx:id="gameCanvas" />
                                     </children>
                                 </VBox>
                                 
