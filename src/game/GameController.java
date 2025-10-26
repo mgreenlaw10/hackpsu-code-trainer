@@ -152,7 +152,9 @@ public class GameController {
 		
 		// Define patterns for syntax highlighting
 		Pattern moveFunctionPattern = Pattern.compile("\\bmove\\b(?=\\s*\\()");
+		Pattern attackFunctionPattern = Pattern.compile("\\battack\\b(?=\\s*\\()");
 		Pattern directionPattern = Pattern.compile("\\b(UP|DOWN|LEFT|RIGHT)\\b");
+		Pattern numberPattern = Pattern.compile("\\b\\d+\\b");
 		
 		// Create a list to store all matches with their positions and types
 		java.util.List<Match> matches = new java.util.ArrayList<>();
@@ -163,10 +165,22 @@ public class GameController {
 			matches.add(new Match(matcher.start(), matcher.end(), "function"));
 		}
 		
+		// Find all attack function matches
+		matcher = attackFunctionPattern.matcher(text);
+		while (matcher.find()) {
+			matches.add(new Match(matcher.start(), matcher.end(), "function"));
+		}
+		
 		// Find all direction constant matches
 		matcher = directionPattern.matcher(text);
 		while (matcher.find()) {
 			matches.add(new Match(matcher.start(), matcher.end(), "constant"));
+		}
+		
+		// Find all number matches
+		matcher = numberPattern.matcher(text);
+		while (matcher.find()) {
+			matches.add(new Match(matcher.start(), matcher.end(), "number"));
 		}
 		
 		// Sort matches by start position
