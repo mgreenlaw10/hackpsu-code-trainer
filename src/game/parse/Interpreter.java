@@ -95,6 +95,13 @@ public class Interpreter {
         }
 	}
 
+	public void cancelExecution() {
+		UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
+		controller.clearExecutionHighlighting();
+		controller.getLevelRenderer().getLevel().restoreOriginalState();
+		controller.getLevelRenderer().getLevel().getPlayer().resetState();
+	}
+
 	public void interpretStatement(StatementExtractor.Statement statement) {
 
 		switch (statement.type) {
@@ -103,6 +110,9 @@ public class Interpreter {
 			}
 			case ATTACK -> {
 				executeAttack((int)statement.args);
+			}
+			case AIM -> {
+				executeAim((Direction)statement.args);
 			}
 		}
 	}
@@ -114,12 +124,19 @@ public class Interpreter {
     private void executeMove(Direction dir) {
     	controller.getLevelRenderer().getLevel().getPlayer().setDirection(dir);
     	controller.getLevelRenderer().getLevel().getPlayer().setWalking();
-    	controller.getLevelRenderer().getLevel().movePlayer(dir);
+    	// if player died...
+    	if (!controller.getLevelRenderer().getLevel().movePlayer(dir)) {
+    		cancelExecution();
+    	}
     }
 
     private void executeAttack(int num) {
     	controller.getLevelRenderer().getLevel().getPlayer().setAttacking();
     	controller.getLevelRenderer().getLevel().playerAttack(num);
+    }
+
+    private void executeAim(Direction dir) {
+    	controller.getLevelRenderer().getLevel().getPlayer().setDirection(dir);
     }
 
     public class ErrorListener extends BaseErrorListener {

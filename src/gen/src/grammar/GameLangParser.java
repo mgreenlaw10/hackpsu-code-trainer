@@ -17,25 +17,25 @@ public class GameLangParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, MOVE=3, ATTACK=4, DIR=5, NUM=6, END=7, WS=8;
+		T__0=1, T__1=2, MOVE=3, ATTACK=4, AIM=5, DIR=6, NUM=7, END=8, WS=9;
 	public static final int
-		RULE_statement = 0, RULE_callMove = 1, RULE_callAttack = 2;
+		RULE_statement = 0, RULE_callMove = 1, RULE_callAttack = 2, RULE_callAim = 3;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"statement", "callMove", "callAttack"
+			"statement", "callMove", "callAttack", "callAim"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'('", "')'", "'move'", "'attack'"
+			null, "'('", "')'", "'move'", "'attack'", "'aim'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, "MOVE", "ATTACK", "DIR", "NUM", "END", "WS"
+			null, null, null, "MOVE", "ATTACK", "AIM", "DIR", "NUM", "END", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -97,6 +97,9 @@ public class GameLangParser extends Parser {
 		public CallAttackContext callAttack() {
 			return getRuleContext(CallAttackContext.class,0);
 		}
+		public CallAimContext callAim() {
+			return getRuleContext(CallAimContext.class,0);
+		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -120,21 +123,28 @@ public class GameLangParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_statement);
 		try {
-			setState(8);
+			setState(11);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case MOVE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(6);
+				setState(8);
 				callMove();
 				}
 				break;
 			case ATTACK:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(7);
+				setState(9);
 				callAttack();
+				}
+				break;
+			case AIM:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(10);
+				callAim();
 				}
 				break;
 			default:
@@ -185,15 +195,15 @@ public class GameLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(10);
-			match(MOVE);
-			setState(11);
-			match(T__0);
-			setState(12);
-			((CallMoveContext)_localctx).arg0 = match(DIR);
 			setState(13);
-			match(T__1);
+			match(MOVE);
 			setState(14);
+			match(T__0);
+			setState(15);
+			((CallMoveContext)_localctx).arg0 = match(DIR);
+			setState(16);
+			match(T__1);
+			setState(17);
 			_la = _input.LA(1);
 			if ( !(_la==EOF || _la==END) ) {
 			_errHandler.recoverInline(this);
@@ -249,15 +259,79 @@ public class GameLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(16);
-			match(ATTACK);
-			setState(17);
-			match(T__0);
-			setState(18);
-			((CallAttackContext)_localctx).arg0 = match(NUM);
 			setState(19);
-			match(T__1);
+			match(ATTACK);
 			setState(20);
+			match(T__0);
+			setState(21);
+			((CallAttackContext)_localctx).arg0 = match(NUM);
+			setState(22);
+			match(T__1);
+			setState(23);
+			_la = _input.LA(1);
+			if ( !(_la==EOF || _la==END) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class CallAimContext extends ParserRuleContext {
+		public Token arg0;
+		public TerminalNode AIM() { return getToken(GameLangParser.AIM, 0); }
+		public TerminalNode DIR() { return getToken(GameLangParser.DIR, 0); }
+		public TerminalNode END() { return getToken(GameLangParser.END, 0); }
+		public TerminalNode EOF() { return getToken(GameLangParser.EOF, 0); }
+		public CallAimContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_callAim; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof GameLangListener ) ((GameLangListener)listener).enterCallAim(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof GameLangListener ) ((GameLangListener)listener).exitCallAim(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof GameLangVisitor ) return ((GameLangVisitor<? extends T>)visitor).visitCallAim(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final CallAimContext callAim() throws RecognitionException {
+		CallAimContext _localctx = new CallAimContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_callAim);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(25);
+			match(AIM);
+			setState(26);
+			match(T__0);
+			setState(27);
+			((CallAimContext)_localctx).arg0 = match(DIR);
+			setState(28);
+			match(T__1);
+			setState(29);
 			_la = _input.LA(1);
 			if ( !(_la==EOF || _la==END) ) {
 			_errHandler.recoverInline(this);
@@ -281,21 +355,27 @@ public class GameLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\b\u0017\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
-		"\u0002\u0007\u0002\u0001\u0000\u0001\u0000\u0003\u0000\t\b\u0000\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
-		"\u0002\u0000\u0000\u0003\u0000\u0002\u0004\u0000\u0001\u0001\u0001\u0007"+
-		"\u0007\u0014\u0000\b\u0001\u0000\u0000\u0000\u0002\n\u0001\u0000\u0000"+
-		"\u0000\u0004\u0010\u0001\u0000\u0000\u0000\u0006\t\u0003\u0002\u0001\u0000"+
-		"\u0007\t\u0003\u0004\u0002\u0000\b\u0006\u0001\u0000\u0000\u0000\b\u0007"+
-		"\u0001\u0000\u0000\u0000\t\u0001\u0001\u0000\u0000\u0000\n\u000b\u0005"+
-		"\u0003\u0000\u0000\u000b\f\u0005\u0001\u0000\u0000\f\r\u0005\u0005\u0000"+
-		"\u0000\r\u000e\u0005\u0002\u0000\u0000\u000e\u000f\u0007\u0000\u0000\u0000"+
-		"\u000f\u0003\u0001\u0000\u0000\u0000\u0010\u0011\u0005\u0004\u0000\u0000"+
-		"\u0011\u0012\u0005\u0001\u0000\u0000\u0012\u0013\u0005\u0006\u0000\u0000"+
-		"\u0013\u0014\u0005\u0002\u0000\u0000\u0014\u0015\u0007\u0000\u0000\u0000"+
-		"\u0015\u0005\u0001\u0000\u0000\u0000\u0001\b";
+		"\u0004\u0001\t \u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0003\u0000\f\b\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0000\u0000\u0004\u0000\u0002"+
+		"\u0004\u0006\u0000\u0001\u0001\u0001\b\b\u001d\u0000\u000b\u0001\u0000"+
+		"\u0000\u0000\u0002\r\u0001\u0000\u0000\u0000\u0004\u0013\u0001\u0000\u0000"+
+		"\u0000\u0006\u0019\u0001\u0000\u0000\u0000\b\f\u0003\u0002\u0001\u0000"+
+		"\t\f\u0003\u0004\u0002\u0000\n\f\u0003\u0006\u0003\u0000\u000b\b\u0001"+
+		"\u0000\u0000\u0000\u000b\t\u0001\u0000\u0000\u0000\u000b\n\u0001\u0000"+
+		"\u0000\u0000\f\u0001\u0001\u0000\u0000\u0000\r\u000e\u0005\u0003\u0000"+
+		"\u0000\u000e\u000f\u0005\u0001\u0000\u0000\u000f\u0010\u0005\u0006\u0000"+
+		"\u0000\u0010\u0011\u0005\u0002\u0000\u0000\u0011\u0012\u0007\u0000\u0000"+
+		"\u0000\u0012\u0003\u0001\u0000\u0000\u0000\u0013\u0014\u0005\u0004\u0000"+
+		"\u0000\u0014\u0015\u0005\u0001\u0000\u0000\u0015\u0016\u0005\u0007\u0000"+
+		"\u0000\u0016\u0017\u0005\u0002\u0000\u0000\u0017\u0018\u0007\u0000\u0000"+
+		"\u0000\u0018\u0005\u0001\u0000\u0000\u0000\u0019\u001a\u0005\u0005\u0000"+
+		"\u0000\u001a\u001b\u0005\u0001\u0000\u0000\u001b\u001c\u0005\u0006\u0000"+
+		"\u0000\u001c\u001d\u0005\u0002\u0000\u0000\u001d\u001e\u0007\u0000\u0000"+
+		"\u0000\u001e\u0007\u0001\u0000\u0000\u0000\u0001\u000b";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

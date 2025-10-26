@@ -14,7 +14,8 @@ public class StatementExtractor {
 
 	public enum StatementType {
 		MOVE,
-		ATTACK
+		ATTACK,
+		AIM
 	}
 
 	public static final class Statement {
@@ -34,6 +35,10 @@ public class StatementExtractor {
 		public static Statement ATTACK(String numArg) {
 			return new Statement(StatementType.ATTACK, Integer.parseInt(numArg));
 		}
+
+		public static Statement AIM(String dirArg) {
+			return new Statement(StatementType.AIM, Direction.parseString(dirArg));
+		}
 	}
 
 	public static class StatementVisitor extends GameLangBaseVisitor<Statement> {
@@ -43,20 +48,27 @@ public class StatementExtractor {
 
 			if (context.callMove() != null) return visitCallMove(context.callMove());
 			if (context.callAttack() != null) return visitCallAttack(context.callAttack());
+			if (context.callAim() != null) return visitCallAim(context.callAim());
 			// should never reach
 			return null;
 		}
 
 		@Override
-        public Statement visitCallMove(GameLangParser.CallMoveContext ctx) {
-            String dirArg = ctx.arg0.getText();
+        public Statement visitCallMove(GameLangParser.CallMoveContext context) {
+            String dirArg = context.arg0.getText();
             return Statement.MOVE(dirArg);
         }
 
         @Override
-        public Statement visitCallAttack(GameLangParser.CallAttackContext ctx) {
-            String numArg = ctx.arg0.getText();
+        public Statement visitCallAttack(GameLangParser.CallAttackContext context) {
+            String numArg = context.arg0.getText();
             return Statement.ATTACK(numArg);
+        }
+
+        @Override
+        public Statement visitCallAim(GameLangParser.CallAimContext context) {
+        	String dirArg = context.arg0.getText();
+        	return Statement.AIM(dirArg);
         }
 	}
 
@@ -71,7 +83,7 @@ public class StatementExtractor {
 
         GameLangParser.StatementContext context = parser.statement();
         StatementVisitor visitor = new StatementVisitor();
-        
+
         return visitor.visit(context);
     }
 }

@@ -32,6 +32,8 @@ public class Player extends GameObject {
 	public void resetState() {
 		coins = 0;
 		energy = 5;
+		direction = Direction.RIGHT;
+		setWalking();
 	}
 
 	public void setWalking() {

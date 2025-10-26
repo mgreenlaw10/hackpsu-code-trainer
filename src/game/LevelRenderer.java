@@ -11,6 +11,7 @@ import game.struct.GameObject;
 import game.struct.Player;
 
 public class LevelRenderer {
+	
 
 	Level level;
 	Canvas canvas;

@@ -28,4 +28,10 @@ public interface GameLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCallAttack(GameLangParser.CallAttackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link GameLangParser#callAim}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallAim(GameLangParser.CallAimContext ctx);
 }

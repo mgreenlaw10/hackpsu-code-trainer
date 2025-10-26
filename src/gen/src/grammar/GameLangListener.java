@@ -37,4 +37,14 @@ public interface GameLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCallAttack(GameLangParser.CallAttackContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GameLangParser#callAim}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallAim(GameLangParser.CallAimContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GameLangParser#callAim}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallAim(GameLangParser.CallAimContext ctx);
 }

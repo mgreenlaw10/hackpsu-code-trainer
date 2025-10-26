@@ -30,6 +30,10 @@ public class GameController {
 	private Engine engine;
 	private LevelRenderer levelRenderer;
 	private Interpreter codeInterpreter;
+
+	public Interpreter getInterpreter() {
+		return codeInterpreter;
+	}
 	
 	// Track current level index
 	private int currentLevelIndex = 0;

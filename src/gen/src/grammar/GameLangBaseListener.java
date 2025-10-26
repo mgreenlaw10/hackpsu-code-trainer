@@ -48,6 +48,18 @@ public class GameLangBaseListener implements GameLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCallAttack(GameLangParser.CallAttackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallAim(GameLangParser.CallAimContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallAim(GameLangParser.CallAimContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

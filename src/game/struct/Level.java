@@ -15,6 +15,14 @@ public class Level {
 
 	Image background;
 	BooleanSupplier winCondition;
+	String taskDescription;
+
+	public void setTaskDescription(String text) {
+		taskDescription = text;
+	}
+	public String getTaskDescription() {
+		return taskDescription;
+	}
 
 	public BooleanSupplier getWinCondition() {
 		return winCondition;
@@ -90,8 +98,8 @@ public class Level {
 		}
 		return null;
 	}
-
-	public void movePlayer(Direction dir) {
+	// returns is the player still alive?
+	public boolean movePlayer(Direction dir) {
 		var player = getPlayer();
 		var pos = getPosition(player);
 		
@@ -99,19 +107,19 @@ public class Level {
 		int dy = 0;
 		switch (dir) {
 			case UP -> {
-				if (pos.y == 0) return;
+				if (pos.y == 0) return true;
 				dy = -1;
 			}
 			case DOWN -> {
-				if (pos.y == size - 1) return;
+				if (pos.y == size - 1) return true;
 				dy = 1;
 			}
 			case LEFT -> {
-				if (pos.x == 0) return;
+				if (pos.x == 0) return true;
 				dx = -1;
 			}
 			case RIGHT -> {
-				if (pos.x == size - 1) return;
+				if (pos.x == size - 1) return true;
 				dx = 1;
 			}
 		}
@@ -121,8 +129,13 @@ public class Level {
 		if (peek != null) {
 			if (peek.getName().equals("coin"))
 				player.addCoin();
+			else if (peek instanceof Monster m) {
+				// if move into monster, die
+				return false;
+			}
 		}
 		insert(player, pos.x + dx, pos.y + dy);
+		return true;
 	}
 
 	public void saveStateAsOriginal() {
