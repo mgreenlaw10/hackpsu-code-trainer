@@ -18,7 +18,8 @@ RES         := res
 # Sources (top-level, one- and two-level subdirs)
 SRCS        := $(wildcard $(SRC_DIR)/*.java) \
                $(wildcard $(SRC_DIR)/*/*.java) \
-               $(wildcard $(SRC_DIR)/*/*/*.java)
+               $(wildcard $(SRC_DIR)/*/*/*.java) \
+               $(wildcard $(SRC_DIR)/*/*/*/*.java)
 # Generated sources after ANTLR runs
 GEN_SRCS    := $(wildcard $(GEN_DIR)/*.java) \
                $(wildcard $(GEN_DIR)/*/*.java)
@@ -27,8 +28,8 @@ ALL_SRCS    := $(SRCS) $(GEN_SRCS)
 # ---- ANTLR ----
 ANTLR_VER   ?= 4.13.2
 ANTLR_JAR   ?= $(LIB)/antlr-$(ANTLR_VER)-complete.jar
-GRAMMARS    := $(wildcard $(SRC_DIR)/grammar/*.g4)
-GEN_STAMP   := $(GEN_DIR)/.generated.stamp
+GRAMMARS    = $(wildcard $(SRC_DIR)/grammar/*.g4)
+GEN_STAMP   = $(GEN_DIR)/.generated.stamp
 # Windows-style glob for IF EXIST (cmd prefers backslashes)
 GRAMMAR_GLOB_WIN := $(SRC_DIR)\grammar\*.g4
 
@@ -90,13 +91,20 @@ all: run
 $(BIN) $(GEN_DIR):
 	@if not exist "$@" mkdir "$@"
 
-# 1) Generate ANTLR sources when grammars change
+# 1) Generate ANTLR sources when grammars (or the tool jar) change
 gen: $(GEN_STAMP)
 
-$(GEN_STAMP): | $(GEN_DIR)
+$(GEN_STAMP): $(GRAMMARS) $(ANTLR_JAR) | $(GEN_DIR)
 	@if not exist "$(ANTLR_JAR)" (echo ERROR: Missing "$(ANTLR_JAR)". Place antlr-$(ANTLR_VER)-complete.jar in lib\ & exit /b 1)
-	@if exist "$(GRAMMAR_GLOB_WIN)" (echo [antlr] generating Java from grammars & $(JAVA) -jar "$(ANTLR_JAR)" -Dlanguage=Java -visitor -listener -o "$(GEN_DIR)" $(SRC_DIR)/grammar/*.g4) else (echo [antlr] no grammars found, skipping)
+	@if exist "$(GRAMMAR_GLOB_WIN)" ( \
+	  echo [antlr] generating Java from grammars & \
+	  $(JAVA) -jar "$(ANTLR_JAR)" -Dlanguage=Java -visitor -listener -o "$(GEN_DIR)" $(SRC_DIR)/grammar/*.g4 \
+	) else ( \
+	  echo [antlr] no grammars found, skipping \
+	)
 	@echo stamp> "$(GEN_STAMP)"
+
+
 
 # 2) Compile (depends on generated sources)
 compile: gen | $(BIN)

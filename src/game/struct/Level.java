@@ -144,4 +144,8 @@ public class Level {
 		}
 		return copy;
 	}
+
+	public void playerAttack(int num) {
+		System.out.println("ATTACK");
+	}
 }

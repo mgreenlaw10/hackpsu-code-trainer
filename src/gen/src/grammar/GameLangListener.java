@@ -28,23 +28,13 @@ public interface GameLangListener extends ParseTreeListener {
 	 */
 	void exitCallMove(GameLangParser.CallMoveContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GameLangParser#callRepeat}.
+	 * Enter a parse tree produced by {@link GameLangParser#callAttack}.
 	 * @param ctx the parse tree
 	 */
-	void enterCallRepeat(GameLangParser.CallRepeatContext ctx);
+	void enterCallAttack(GameLangParser.CallAttackContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GameLangParser#callRepeat}.
+	 * Exit a parse tree produced by {@link GameLangParser#callAttack}.
 	 * @param ctx the parse tree
 	 */
-	void exitCallRepeat(GameLangParser.CallRepeatContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GameLangParser#closeScope}.
-	 * @param ctx the parse tree
-	 */
-	void enterCloseScope(GameLangParser.CloseScopeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GameLangParser#closeScope}.
-	 * @param ctx the parse tree
-	 */
-	void exitCloseScope(GameLangParser.CloseScopeContext ctx);
+	void exitCallAttack(GameLangParser.CallAttackContext ctx);
 }
