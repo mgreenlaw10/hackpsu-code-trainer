@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane minHeight="400.0" minWidth="600.0" prefHeight="700.0" prefWidth="1200.0" styleClass="root" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
+<AnchorPane minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
 
     <children>
         <SplitPane dividerPositions="0.45" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -76,7 +76,7 @@
                                                <VBox spacing="8.0">
                                                   <children>
                                                       <Label styleClass="docs-section-title" text="How to Play" />
-                                                      <Label styleClass="docs-text" text="Description of how the game works..." wrapText="true" />
+                                                      <Label styleClass="docs-text" text="In this game you want to move your character to get to the end reward." wrapText="true" />
                                                   </children>
                                                </VBox>
                                                
@@ -88,24 +88,11 @@
                                                       
                                                       <HBox spacing="12.0" styleClass="docs-keyword">
                                                          <children>
-                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="keyword()" />
-                                                             <Label styleClass="docs-text" text="Description of what this keyword does" wrapText="true" HBox.hgrow="ALWAYS" />
+                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="move()" />
+                                                             <Label styleClass="docs-text" text="This function will move your character UP, DOWN, RIGHT, and LEFT" wrapText="true" HBox.hgrow="ALWAYS" />
                                                          </children>
                                                       </HBox>
-                                                      
-                                                      <HBox spacing="12.0" styleClass="docs-keyword">
-                                                         <children>
-                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="keyword(param)" />
-                                                             <Label styleClass="docs-text" text="Description with parameter explanation" wrapText="true" HBox.hgrow="ALWAYS" />
-                                                         </children>
-                                                      </HBox>
-                                                      
-                                                      <HBox spacing="12.0" styleClass="docs-keyword">
-                                                         <children>
-                                                             <Label minWidth="120.0" styleClass="docs-keyword-name" text="keyword(x, y)" />
-                                                             <Label styleClass="docs-text" text="Description with multiple parameters" wrapText="true" HBox.hgrow="ALWAYS" />
-                                                         </children>
-                                                      </HBox>
+
                                                   </children>
                                                </VBox>
                                                
@@ -113,7 +100,7 @@
                                                <VBox spacing="8.0">
                                                   <children>
                                                       <Label styleClass="docs-section-title" text="Examples" />
-                                                      <Label styleClass="docs-code-block" text="keyword()&#10;keyword(5)&#10;keyword(10, 20)" />
+                                                      <Label styleClass="docs-code-block" text="move(UP)&#10;move(RIGHT)&#10;move(DOWN)" />
                                                   </children>
                                                </VBox>
                                            </children>
