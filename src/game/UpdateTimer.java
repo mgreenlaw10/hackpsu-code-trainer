@@ -9,8 +9,14 @@ import java.lang.Runnable;
 public final class UpdateTimer extends AnimationTimer {
 
 	static List<Runnable> drawRoutines = new ArrayList<>();
+	static List<Runnable> updateRoutines = new ArrayList<>();
+
 	public static void addDrawRoutine(Runnable func) {
 		drawRoutines.add(func);
+	}
+
+	public static void addUpdateRoutine(Runnable func) {
+		updateRoutines.add(func);
 	}
 
 	Engine engine;

@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
 import game.struct.Level;
 import game.struct.GameObject;
@@ -12,12 +14,16 @@ public class GameController {
 
 	private Engine engine;
 	private LevelRenderer levelRenderer;
+	private Interpreter codeInterpreter;
 
 	@FXML private AnchorPane root;
 	@FXML private Canvas gameCanvas;
+	@FXML private Button runButton;
+	@FXML private TextArea codeEditor;
 
 	@FXML private void initialize() {
 		levelRenderer = new LevelRenderer(gameCanvas);
+		codeInterpreter = new Interpreter(this);
 
 		Level testLevel = new Level(10);
 		GameObject dog = new GameObject("dog", Engine.makeImage("/res/image/dog.png"));
@@ -46,7 +52,11 @@ public class GameController {
 		
 	}
 
-	public LevelRenderer getLevelRenderer() {
+	@FXML void runCode() {
+		codeInterpreter.interpretText(codeEditor.getText());
+	}
+
+    public LevelRenderer getLevelRenderer() {
 		return levelRenderer;
 	}
 }
