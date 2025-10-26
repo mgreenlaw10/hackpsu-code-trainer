@@ -1,0 +1,88 @@
+/* === Root & Base === */
+.root {
+    -fx-background-color: #0F1419;
+    -fx-font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* === Utility Classes === */
+.centered {
+    -fx-alignment: center;
+}
+
+.maxw-960 {
+    -fx-max-width: 960px;
+}
+
+.stack-8 {
+    -fx-spacing: 8px;
+}
+
+.stack-12 {
+    -fx-spacing: 12px;
+}
+
+/* === Typography === */
+.title-text {
+    -fx-fill: #E6EDF3;
+    -fx-font-weight: 600;
+    -fx-font-size: 48px;
+}
+
+.subtitle-text {
+    -fx-fill: #7D8590;
+    -fx-font-size: 14px;
+}
+
+/* === Buttons === */
+.button {
+    -fx-background-color: #21262D;
+    -fx-background-radius: 6px;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-text-fill: #C9D1D9;
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #30363D;
+    -fx-border-color: #484F58;
+}
+
+.button:pressed {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+}
+
+.button:focused {
+    -fx-border-color: #1F6FEB;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(31, 111, 235, 0.4), 4, 0.0, 0, 0);
+}
+
+/* Primary Button */
+.button.primary {
+    -fx-background-color: #1F6FEB;
+    -fx-border-color: #1F6FEB;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+}
+
+.button.primary:hover {
+    -fx-background-color: #388BFD;
+    -fx-border-color: #388BFD;
+}
+
+.button.primary:pressed {
+    -fx-background-color: #1A5DC9;
+    -fx-border-color: #1A5DC9;
+}
+
+.button.primary:focused {
+    -fx-border-color: #58A6FF;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(88, 166, 255, 0.6), 6, 0.0, 0, 0);
+}

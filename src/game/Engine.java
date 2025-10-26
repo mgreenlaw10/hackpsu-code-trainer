@@ -26,11 +26,11 @@ public class Engine extends Application {
 	private UpdateTimer updateTimer;
 	
 	final String APPNAME = "HackPSU Project";
-	final String GUIPATH = "/res/fxml/GameGui.fxml";
+	final String GUIPATH = "/res/fxml/StartScreen.fxml";
 	//final String ICONPATH = "/res/image/rh-icon.png";
 
 	final int MINWIDTH = 900;
-	final int MINHEIGHT = 600;
+	final int MINHEIGHT = 750;
 
 	@Override
 	public void start(Stage pStage) {
@@ -68,13 +68,22 @@ public class Engine extends Application {
 			}
 		}
 	}
-
+	
 	private Parent loadGUI(String path) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 			Parent gui = loader.load();
-			mainController = loader.getController();
-			mainController.setEngineHandle(this);
+			
+			// Handle different controller types
+			Object controller = loader.getController();
+			if (controller instanceof GameController) {
+				mainController = (GameController) controller;
+				mainController.setEngineHandle(this);
+			} else if (controller instanceof StartController) {
+				StartController startController = (StartController) controller;
+				startController.setEngineHandle(this);
+			}
+			
 			return gui;
 		} 
 		catch (Exception ex) {
