@@ -29,6 +29,10 @@ public class Player extends GameObject {
 		return coins;
 	}
 
+	public int getEnergy() {
+		return energy;
+	}
+
 	public void resetState() {
 		coins = 0;
 		energy = 5;

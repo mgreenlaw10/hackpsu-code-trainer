@@ -66,11 +66,31 @@
                         <StackPane VBox.vgrow="ALWAYS">
                             <children>
                                 
-                                <StackPane fx:id="gameTabContent" styleClass="canvas-container">
+                                <VBox fx:id="gameTabContent" styleClass="canvas-container">
                                     <children>
+                                        <!-- Stats Display Box -->
+                                        <HBox styleClass="stats-box" spacing="40.0" alignment="CENTER_LEFT">
+                                            <padding>
+                                                <Insets top="8.0" bottom="8.0" left="16.0" right="16.0" />
+                                            </padding>
+                                            <children>
+                                                <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                                    <children>
+                                                        <Label styleClass="stats-label" text="Coins:" />
+                                                        <Label fx:id="coinsLabel" styleClass="stats-value" text="0" />
+                                                    </children>
+                                                </HBox>
+                                                <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                                    <children>
+                                                        <Label styleClass="stats-label" text="Energy:" />
+                                                        <Label fx:id="energyLabel" styleClass="stats-value" text="5" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </HBox>
                                         <Canvas fx:id="gameCanvas" styleClass="dynamic-canvas" />
                                     </children>
-                                </StackPane>
+                                </VBox>
                                 
                                 
                                 <ScrollPane fx:id="tasksTabContent" fitToWidth="true" styleClass="docs-container" visible="false">

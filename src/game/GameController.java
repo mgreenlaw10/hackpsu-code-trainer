@@ -41,11 +41,15 @@ public class GameController {
 	@FXML private Slider speedSlider;
 	@FXML private Label speedValueLabel;
 
+	// Stats labels
+	@FXML private Label coinsLabel;
+	@FXML private Label energyLabel;
+
 	// Tab controls
 	@FXML private Button gameTabButton;
 	@FXML private Button tasksTabButton;
 	@FXML private Button docsTabButton;
-	@FXML private StackPane gameTabContent;
+	@FXML private VBox gameTabContent;
 	@FXML private ScrollPane tasksTabContent;
 	@FXML private ScrollPane docsTabContent;
 
@@ -330,6 +334,19 @@ public class GameController {
 		if (level != null) {
 			levelRenderer.setLevel(level);
 			clearExecutionHighlighting();
+			updateStats();
+		}
+	}
+	
+	// Update the stats display
+	public void updateStats() {
+		Level level = levelRenderer.getLevel();
+		if (level != null) {
+			var player = level.getPlayer();
+			if (player != null) {
+				coinsLabel.setText(String.valueOf(player.getCoins()));
+				energyLabel.setText(String.valueOf(player.getEnergy()));
+			}
 		}
 	}
 	
