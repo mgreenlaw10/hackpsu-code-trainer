@@ -33,17 +33,7 @@ public class GameController {
 		levelRenderer = new LevelRenderer(gameCanvas);
 		codeInterpreter = new Interpreter(this);
 
-		Level testLevel = new Level(10);
-		GameObject dog = new GameObject("dog", Engine.makeImage("/res/image/dog.png"));
-		GameObject zyn = new GameObject("zyn", Engine.makeImage("/res/image/zyn.png"));
-		testLevel.insert(dog, 1, 1);
-		testLevel.insert(zyn, 5, 5);
-		testLevel.insert(zyn.clone(), 6, 5);
-		testLevel.insert(zyn.clone(), 7, 5);
-		testLevel.insert(zyn.clone(), 8, 5);
-		testLevel.saveStateAsOriginal();
-
-		levelRenderer.setLevel(testLevel);
+		levelRenderer.setLevel(LevelTemplates.getLevel1());
 		UpdateTimer.addDrawRoutine(levelRenderer::draw);
 	}
 

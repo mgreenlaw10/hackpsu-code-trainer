@@ -1,8 +1,16 @@
 grammar GameLang;
 @header {package game.grammar;}
 
-callMove : MOVE '(' arg=DIR ')' (NL | EOF);
+statement : callMove | callRepeat;
+
+callMove : MOVE '(' arg0=DIR ')' END;
+
+callRepeat : REPEAT '('arg0=NUM ')' '{' END;
+
+closeScope : '}' END;
 
 MOVE : 'move';
+REPEAT : 'repeat';
 DIR : 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
-NL : '\n';
+NUM : [0-9]+;
+END : '\n' | EOF;

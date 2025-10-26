@@ -68,7 +68,7 @@ public class Engine extends Application {
 			}
 		}
 	}
-	
+
 	private Parent loadGUI(String path) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
@@ -91,7 +91,7 @@ public class Engine extends Application {
 	        throw new RuntimeException("Failed to load FXML", ex);
 	    }
 	}
-
+ 
 	public static Image makeImage(String path) {
 		return new Image(Engine.class.getResource(path).toExternalForm());
 	}

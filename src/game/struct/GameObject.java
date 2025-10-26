@@ -12,6 +12,10 @@ public class GameObject {
 		image = pImage;
 	}
 
+	public String getName() { 
+		return name;
+	}
+
 	public Image getImage() {
 		return image;
 	}

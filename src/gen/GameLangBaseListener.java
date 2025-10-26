@@ -17,6 +17,18 @@ public class GameLangBaseListener implements GameLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatement(GameLangParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatement(GameLangParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCallMove(GameLangParser.CallMoveContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -24,6 +36,30 @@ public class GameLangBaseListener implements GameLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCallMove(GameLangParser.CallMoveContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallRepeat(GameLangParser.CallRepeatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallRepeat(GameLangParser.CallRepeatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCloseScope(GameLangParser.CloseScopeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCloseScope(GameLangParser.CloseScopeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

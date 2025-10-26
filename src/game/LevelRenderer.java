@@ -14,8 +14,8 @@ public class LevelRenderer {
 	Level level;
 	Canvas canvas;
 
-	final int WIDTH = 500;
-	final int HEIGHT = 500;
+	final int WIDTH = 600;
+	final int HEIGHT = 600;
 
 	public LevelRenderer(Canvas pCanvas) {
 		canvas = pCanvas;
@@ -31,6 +31,8 @@ public class LevelRenderer {
 		if (level == null) return;
 
 		GraphicsContext graphics = canvas.getGraphicsContext2D();
+
+		graphics.setImageSmoothing(false);
 
 		double cw = canvas.getWidth();
 		double ch = canvas.getHeight();
@@ -80,10 +82,14 @@ public class LevelRenderer {
 			for (int col = 0; col < ls; col++) {
 
 				var obj = tileMap[row][col];
+				double dx = col * ds + snap;
+				double dy = row * ds + snap;
+				double is = ds - snap;
+				if (level.getBackground() != null) {
+					Image img = level.getBackground();
+					graphics.drawImage(img, dx, dy, is, is);
+				}
 				if (obj != null) {
-					double dx = col * ds + snap;
-					double dy = row * ds + snap;
-					double is = ds - snap;
 					Image img = obj.getImage();
 					graphics.drawImage(img, dx, dy, is, is);
 				}

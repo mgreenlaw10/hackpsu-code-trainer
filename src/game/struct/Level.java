@@ -3,12 +3,26 @@ package game.struct;
 import game.math.Vec2i;
 import game.math.Direction;
 
+import javafx.scene.image.Image;
+import java.util.function.BooleanSupplier;
+
 public class Level {
 
 	// maintain a copy of the original state to return back to after running a script
 	GameObject[][] originalState;
 	GameObject[][] tileMap;
 	int size;
+
+	Image background;
+	BooleanSupplier winCondition;
+
+	public BooleanSupplier getWinCondition() {
+		return winCondition;
+	}
+
+	public void setWinCondition(BooleanSupplier func) {
+		winCondition = func;
+	}
 
 	public Level(int pSize, GameObject[][] pTileMap) {
 		size = pSize;
@@ -17,6 +31,14 @@ public class Level {
 
 	public Level(int pSize) {
 		this(pSize, new GameObject[pSize][pSize]);
+	}
+
+	public Image getBackground() {
+		return background;
+	}
+
+	public void setBackground(Image image) {
+		background = image;
 	}
 
 	public int getSize() {
@@ -41,12 +63,16 @@ public class Level {
 		}
 	}
 
-	public GameObject getPlayer() {
+	public GameObject getObjectAt(int col, int row) {
+		return tileMap[row][col];
+	}
+
+	public Player getPlayer() {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				var obj = tileMap[i][j];
-				if (obj != null && obj.name.equals("dog")) {
-					return obj;
+				if (obj != null && obj instanceof Player p) {
+					return p;
 				}
 			}
 		}
@@ -90,6 +116,12 @@ public class Level {
 			}
 		}
 		remove(player);
+		// peek at the space we're about to move to
+		GameObject peek = getObjectAt(pos.x + dx, pos.y + dy);
+		if (peek != null) {
+			if (peek.getName().equals("coin"))
+				player.addCoin();
+		}
 		insert(player, pos.x + dx, pos.y + dy);
 	}
 

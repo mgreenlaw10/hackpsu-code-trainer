@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import game.grammar.GameLangParser;
 import game.grammar.GameLangLexer;
 import game.grammar.GameLangBaseListener;
+import game.grammar.GameLangBaseVisitor;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -32,14 +33,24 @@ public class Interpreter {
 		controller = pController;
 	}
 
-	BufferedReader reader;
+	//BufferedReader reader;
 	TimerEvent activeInterpretEvent;
+
+	List<String> programLines;
+	int currentLine;
 
 	public void interpretText(String text) {
 		// create iterator over codeEditor lines
 		try {
-			BufferedReader newReader = new BufferedReader(new StringReader(text));
-	        reader = newReader;
+			BufferedReader reader = new BufferedReader(new StringReader(text));
+	        //reader = newReader;
+	        programLines = new ArrayList<String>();
+	        currentLine = 0;
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+		        programLines.add(line);
+		    }
+		    System.out.println(programLines);
 	    } catch (Exception e) {
 	        //e.printStackTrace();
 	    }
@@ -51,15 +62,24 @@ public class Interpreter {
 		String line;
         // interpret line-by-line
         try {
-	        if ((line = reader.readLine()) != null) {
-	            interpretLine(line);
-	        }
+        	if (currentLine < programLines.size()) {
+        		line = programLines.get(currentLine++).strip();
+        		interpretLine(line);
+        	}
+	        // if ((line = reader.readLine()) != null) {
+	        //     interpretLine(line);
+	        // }
 	        else {
 	        	// if parsing is done, destroy the BufferedReader, cancel the TimerEvent, and restore the active level's original state
-	        	reader.close();
-	        	reader = null;
+	        	//reader.close();
+	        	//reader = null;
 	        	UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
-	        	controller.getLevelRenderer().getLevel().restoreOriginalState();
+
+	        	// did the text beat the level?
+	        	boolean won = controller.getLevelRenderer().getLevel().getWinCondition().getAsBoolean();
+	        	// hard code
+	        	if (won) controller.getLevelRenderer().setLevel(LevelTemplates.getLevel2());
+	        	else controller.getLevelRenderer().getLevel().restoreOriginalState();
 	        }
         }
         catch (Exception e) {
@@ -79,24 +99,36 @@ public class Interpreter {
 	    // parser.removeErrorListeners();
 	    // parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
-	    GameLangParser.CallMoveContext tree = parser.callMove();
+	    GameLangParser.CallMoveContext moveTree = parser.callMove();
 
-	    ArgCollector collector = new ArgCollector();
-	    ParseTreeWalker.DEFAULT.walk(collector, tree);
+	    ArgCollector moveCollector = new ArgCollector();
+
+	    ParseTreeWalker.DEFAULT.walk(moveCollector, moveTree);
 
 	    // if successfully parsed a move(dir), execute it
-	    if (!collector.getArgs().isEmpty()) {
-	    	executeMove(collector.getArgs().get(0));
+	    if (!moveCollector.getArgs().isEmpty()) {
+	    	executeMove(moveCollector.getArgs().get(0));
 	    }
 	}
 
+	public static class Executor extends GameLangBaseVisitor<Void> {
+
+	}
+
 	public static class ArgCollector extends GameLangBaseListener {
+
         private final List<String> args = new ArrayList<>();
 
         @Override
         public void exitCallMove(GameLangParser.CallMoveContext ctx) {
-            String argText = ctx.arg.getText();
-            args.add(argText);
+            String dirArg = ctx.arg0.getText();
+            args.add(dirArg);
+        }
+
+        @Override
+        public void exitCallRepeat(GameLangParser.CallRepeatContext ctx) {
+        	String countArg = ctx.arg0.getText();
+        	args.add(countArg);
         }
 
         public List<String> getArgs() {
@@ -105,9 +137,27 @@ public class Interpreter {
     }
 
     private void executeMove(String args) {
-
     	Direction dir = Direction.parseString(args);
     	controller.getLevelRenderer().getLevel().movePlayer(dir);
+    }
+
+    int returnLine;
+    int repeatCounter;
+    int breakThreshold;
+
+    private void executeRepeat(String args) {
+    	System.out.println("called");
+    	// Integer count = String.parseInt(args);
+    	// repeatCounter = 0;
+    	// breakThreshold = count;
+    	// returnLine = currentLine;
+    }
+
+    private void jumpBackToLoop() {
+    	if (repeatCounter >= breakThreshold) {
+    		return;
+    	}
+    	currentLine = returnLine;
     }
 	
 }
