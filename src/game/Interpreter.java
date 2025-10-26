@@ -26,19 +26,28 @@ import java.io.StringReader;
 public class Interpreter {
 
 	GameController controller;
-
+	
 	long delay = 500;
+	private int currentLineNumber = 0;
 
 	public Interpreter(GameController pController) {
 		controller = pController;
 	}
 
-	//BufferedReader reader;
+	public void setDelay(long pDelay) {
+		delay = pDelay;
+	}
+
+	public int getCurrentLineNumber() {
+		return currentLineNumber;
+	}
+
+	BufferedReader reader;
 	TimerEvent activeInterpretEvent;
 
 	List<String> programLines;
 	int currentLine;
-
+	
 	public void interpretText(String text) {
 		// create iterator over codeEditor lines
 		try {
@@ -86,8 +95,52 @@ public class Interpreter {
         	e.printStackTrace();
         }
 	}
-	
+	//temporary fix for lines
+	public void interpretTextForLines(String text) {
+		// create iterator over codeEditor lines
+		currentLineNumber = 0; // Reset line counter
+		try {
+			BufferedReader newReader = new BufferedReader(new StringReader(text));
+	        reader = newReader;
+	    } catch (Exception e) {
+	        //e.printStackTrace();
+	    }
+		activeInterpretEvent = new TimerEvent(this::interpretNextFromMemoryForLines, delay);
+	    UpdateTimer.addUpdateRoutine(activeInterpretEvent);
+	}
+	//temporary fix for lines
+	void interpretNextFromMemoryForLines() {
+		if (reader == null) {
+			return; // Exit early if reader is null
+		}
+		
+		String line;
+        // interpret line-by-line
+        try {
+	        if ((line = reader.readLine()) != null) {
+	        	currentLineNumber++; // Increment line counter
+	        	controller.highlightExecutingLine(currentLineNumber - 1); // Highlight current line (0-indexed)
+	            interpretLine(line);
+	        }
+	        else {
+	        	// if parsing is done, destroy the BufferedReader, cancel the TimerEvent, and restore the active level's original state
+	        	reader.close();
+	        	reader = null;
+	        	UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
+	        	controller.getLevelRenderer().getLevel().restoreOriginalState();
+	        	controller.clearExecutionHighlighting(); // Clear highlighting when done
+	        }
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+        }
+	}
+
 	public void interpretLine(String text) {
+
+		// Ensure the input ends with a newline so the grammar's END token can be matched
+		if (text == null) text = "\n";
+		else if (!text.endsWith("\n")) text = text + "\n";
 
 		GameLangLexer lexer = new GameLangLexer(CharStreams.fromString(text));
 	    // lexer.removeErrorListeners();

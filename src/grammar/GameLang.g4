@@ -3,14 +3,18 @@ grammar GameLang;
 
 statement : callMove | callRepeat;
 
-callMove : MOVE '(' arg0=DIR ')' END;
+// allow either an explicit newline (END) or EOF at the end of a call
+callMove : MOVE '(' arg0=DIR ')' (END | EOF);
 
-callRepeat : REPEAT '('arg0=NUM ')' '{' END;
+callRepeat : REPEAT '(' arg0=NUM ')' '{' (END | EOF);
 
-closeScope : '}' END;
+closeScope : '}' (END | EOF);
 
 MOVE : 'move';
 REPEAT : 'repeat';
 DIR : 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 NUM : [0-9]+;
-END : '\n' | EOF;
+// END is a real newline token. EOF is handled in parser rules above.
+END : '\r'? '\n';
+
+WS : [ \t]+ -> skip;

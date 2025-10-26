@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import org.fxmisc.richtext.CodeArea?>
 
 <AnchorPane minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@app.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
 
@@ -20,20 +21,28 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
                    <children>
-                       <HBox alignment="CENTER_LEFT" spacing="12.0">
+                       <HBox alignment="CENTER_LEFT" spacing="16.0">
                            <children>
-                               <Label styleClass="subheading" text="Code Editor" HBox.hgrow="ALWAYS" />
-                               <Button fx:id="runButton" onAction="#runCode" prefHeight="36.0" prefWidth="117.0" styleClass="button,primary" text="▶ Run Code" />
+                               <VBox spacing="4.0">
+                                   <children>
+                                       <Label styleClass="slider-label" text="Step Delay" />
+                                       <Slider fx:id="speedSlider" min="100" max="2000" value="500" showTickMarks="false" showTickLabels="false" prefWidth="140.0" styleClass="speed-slider" />
+                                   </children>
+                               </VBox>
+                               <Button fx:id="runButton" onAction="#runCode" prefHeight="40.0" prefWidth="130.0" styleClass="button,primary" text="▶ Run Code" />
                            </children>
                        </HBox>
-                       <HBox spacing="0" styleClass="code-editor-wrapper" VBox.vgrow="ALWAYS">
+                       <VBox spacing="0" styleClass="code-editor-container" VBox.vgrow="ALWAYS">
                            <children>
-                               
-                                                              <TextArea fx:id="lineNumbers" editable="false" focusTraversable="false" minWidth="50.0" prefWidth="50.0" styleClass="line-numbers" text="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11&#10;12&#10;13&#10;14&#10;15&#10;16&#10;17&#10;18&#10;19&#10;20&#10;21&#10;22&#10;23&#10;24&#10;25&#10;26&#10;27&#10;28&#10;29&#10;30" wrapText="false" />
-                               
-                               <TextArea fx:id="codeEditor" promptText="CODE HERE" styleClass="code-editor" wrapText="false" HBox.hgrow="ALWAYS" />
+                               <HBox styleClass="file-header" alignment="CENTER_LEFT">
+                                   <children>
+                                       
+                                       <Label styleClass="file-path" text="Code Editor" />
+                                   </children>
+                               </HBox>
+                               <CodeArea fx:id="codeEditor" styleClass="code-editor" wrapText="false" VBox.vgrow="ALWAYS" />
                            </children>
-                       </HBox>
+                       </VBox>
                    </children>
                 </VBox>
 
@@ -46,6 +55,7 @@
                         <HBox spacing="8.0">
                             <children>
                                 <Button fx:id="gameTabButton" onAction="#showGameTab" prefWidth="80.0" styleClass="tab-button, tab-active" text="Game" />
+                                <Button fx:id="tasksTabButton" onAction="#showTasksTab" prefWidth="80.0" styleClass="tab-button" text="Tasks" />
                                 <Button fx:id="docsTabButton" onAction="#showDocsTab" prefWidth="80.0" styleClass="tab-button" text="Docs" />
                             </children>
                         </HBox>
@@ -59,6 +69,42 @@
                                         <Canvas fx:id="gameCanvas" styleClass="dynamic-canvas" />
                                     </children>
                                 </StackPane>
+                                
+                                
+                                <ScrollPane fx:id="tasksTabContent" fitToWidth="true" styleClass="docs-container" visible="false">
+                                    <content>
+                                        <VBox spacing="20.0" styleClass="docs-content">
+                                            <padding>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                            </padding>
+                                           <children>
+                                               
+                                               <Label styleClass="docs-title" text="Level Tasks" />
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Level 1" />
+                                                      <Label styleClass="docs-text" text="level 1 info" wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                               
+                                               <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Level 2" />
+                                                      <Label styleClass="docs-text" text="level 2 info" wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                                      <VBox spacing="8.0">
+                                                  <children>
+                                                      <Label styleClass="docs-section-title" text="Level 3" />
+                                                      <Label styleClass="docs-text" text="level 3 info" wrapText="true" />
+                                                  </children>
+                                               </VBox>
+                                               
+                                           </children>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
                                 
                                 
                                 <ScrollPane fx:id="docsTabContent" fitToWidth="true" styleClass="docs-container" visible="false">
