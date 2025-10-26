@@ -33,7 +33,7 @@ public class GameController {
 		testLevel.insert(zyn.clone(), 6, 5);
 		testLevel.insert(zyn.clone(), 7, 5);
 		testLevel.insert(zyn.clone(), 8, 5);
-		//testLevel.remove(zyn);
+		testLevel.saveStateAsOriginal();
 
 		levelRenderer.setLevel(testLevel);
 		UpdateTimer.addDrawRoutine(levelRenderer::draw);

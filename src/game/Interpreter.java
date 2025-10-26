@@ -26,21 +26,45 @@ public class Interpreter {
 
 	GameController controller;
 
+	long delay = 500;
+
 	public Interpreter(GameController pController) {
 		controller = pController;
 	}
 
+	BufferedReader reader;
+	TimerEvent activeInterpretEvent;
+
 	public void interpretText(String text) {
 		// create iterator over codeEditor lines
-		try (BufferedReader reader = new BufferedReader(new StringReader(text))) {
-	        String line;
-	        // interpret line-by-line
-	        while ((line = reader.readLine()) != null) {
-	            interpretLine(line);
-	        }
+		try {
+			BufferedReader newReader = new BufferedReader(new StringReader(text));
+	        reader = newReader;
 	    } catch (Exception e) {
 	        //e.printStackTrace();
 	    }
+	    activeInterpretEvent = new TimerEvent(this::interpretNextFromMemory, delay);
+	    UpdateTimer.addUpdateRoutine(activeInterpretEvent);
+	}
+
+	void interpretNextFromMemory() {
+		String line;
+        // interpret line-by-line
+        try {
+	        if ((line = reader.readLine()) != null) {
+	            interpretLine(line);
+	        }
+	        else {
+	        	// if parsing is done, destroy the BufferedReader, cancel the TimerEvent, and restore the active level's original state
+	        	reader.close();
+	        	reader = null;
+	        	UpdateTimer.removeUpdateRoutine(activeInterpretEvent);
+	        	controller.getLevelRenderer().getLevel().restoreOriginalState();
+	        }
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+        }
 	}
 	
 	public void interpretLine(String text) {
