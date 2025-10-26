@@ -16,3 +16,17 @@ move(UP)
 move(UP)
 move(LEFT)
 move(LEFT)
+
+Level 1:
+
+move(DOWN)
+move(DOWN)
+move(DOWN)
+move(RIGHT)
+move(RIGHT)
+move(RIGHT)
+
+
+move(DOWN)
+aim(UP)
+attack(1)
