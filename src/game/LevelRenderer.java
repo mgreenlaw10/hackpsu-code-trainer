@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import game.math.Vec2d;
 import game.struct.Level;
 import game.struct.GameObject;
+import game.struct.Player;
 
 public class LevelRenderer {
 
@@ -71,7 +72,6 @@ public class LevelRenderer {
 	}
 
 	private void drawTileObjects(GraphicsContext graphics, double cw, double ch) {
-		graphics.save();
 
 		int ls = level.getSize();
 		double ds = getTileDrawSize(ls);
@@ -89,14 +89,34 @@ public class LevelRenderer {
 					Image img = level.getBackground();
 					graphics.drawImage(img, dx, dy, is, is);
 				}
-				if (obj != null) {
+				if (obj instanceof Player player) {
+					Image img = player.getImage();
+					// transform for direction
+					graphics.save();
+					switch (player.getDirection()) {
+						case UP -> {
+
+						}
+						case DOWN -> {
+							rotate90(graphics, dx, dy, is, is);
+							graphics.drawImage(img, -is / 2, -is / 2);
+						}
+						case LEFT -> {
+							break; // default
+						}
+						case RIGHT -> {
+							hflip(graphics, dx, dy, is);
+							graphics.drawImage(img, 0, 0, is, is);
+						}
+					}
+					graphics.restore();
+				}	
+				else if (obj != null) {
 					Image img = obj.getImage();
 					graphics.drawImage(img, dx, dy, is, is);
 				}
 			}
 		}
-
-		graphics.restore();
 	}
 
 	private double getTileDrawSize(int levelSize) {
@@ -106,5 +126,15 @@ public class LevelRenderer {
 
 	public Level getLevel() {
 		return level;
+	}
+
+	void hflip(GraphicsContext graphics, double x, double y, double w) { 
+		graphics.translate(x + w, y);
+		graphics.scale(-1, 1);
+	}
+
+	void rotate90(GraphicsContext graphics, double x, double y, double w, double h) {
+		graphics.translate(x + w / 2, y + h / 2);
+		graphics.rotate(90);
 	}
 }
